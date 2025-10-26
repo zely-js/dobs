@@ -1,0 +1,28 @@
+{
+  "name": "@dobs/http",
+  "version": "0.0.0",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "repository": "https://github.com/zely-js/dobs",
+  "description": "base http server",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
+  "dependencies": {
+    "encodeurl": "^2.0.0",
+    "mime-types": "^3.0.1"
+  }
+}

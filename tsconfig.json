@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.base.json",
+  "include": [
+    "packages/**/*.ts",
+    "packages/**/*.d.ts",
+    "packages/**/*.test.ts",
+    "packages/**/*.test.tsx"
+  ],
+
+  "compilerOptions": {
+    "rootDir": ".",
+    "paths": {
+      "~/dobs/*": ["./packages/dobs/src/*"],
+      "~/build/*": ["./packages/dobs-compiler/*"]
+    }
+  }
+}
