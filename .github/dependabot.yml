@@ -1,0 +1,9 @@
+version: 2
+updates:
+  - package-ecosystem: 'npm' # See documentation for possible values
+    open-pull-requests-limit: 10
+    directory: '/' # Location of package manifests
+    schedule:
+      interval: 'daily'
+      time: '00:00'
+      timezone: 'Asia/Seoul'
