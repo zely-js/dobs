@@ -21,6 +21,7 @@ export async function dynamicImport(filePath: string): Promise<ModuleExports> {
     } catch {
       // nothing
     }
+
     const exports = require(filePath);
     return exports && exports.__esModule && exports.default ? exports.default : exports;
   }
