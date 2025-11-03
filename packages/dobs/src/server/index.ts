@@ -1,5 +1,5 @@
 import { Server } from 'node:http';
-import httpServer, { Middleware } from '@dobs/http';
+import httpServer, { Middleware } from '@dobsjs/http';
 import { resolveConfig, ServerConfig } from '~/dobs/config';
 import { createRouterMiddleware } from './router';
 
@@ -26,5 +26,3 @@ export async function createDobsServer<T extends ServerConfig>(
     // TODO
   }) as unknown as CreateServerReturn<T>;
 }
-
-createDobsServer();

@@ -1,9 +1,9 @@
-# @dobs/http
+# @dobsjs/http
 
 http base server
 
 ```ts
-import server from '@dobs/http';
+import server from '@dobsjs/http';
 
 const app = server();
 

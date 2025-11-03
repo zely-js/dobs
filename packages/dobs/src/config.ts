@@ -1,5 +1,5 @@
 import { createServer } from 'node:http';
-import type { Middleware } from '@dobs/http';
+import type { Middleware } from '@dobsjs/http';
 import { deepmerge } from 'deepmerge-ts';
 
 export interface ResolvedServerConfig {
