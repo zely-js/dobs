@@ -1,6 +1,6 @@
 import { join, relative } from 'node:path';
 
-import type { AppRequest, AppResponse, Middleware } from '@dobs/http';
+import type { AppRequest, AppResponse, Middleware } from '@dobsjs/http';
 import { build, BuildOptions } from 'rolldown';
 import chokidar from 'chokidar';
 import chalk from 'chalk';
@@ -12,6 +12,7 @@ import { changeExtension, isSamePath } from '~/dobs/shared/path';
 import { lowercaseKeyObject } from '~/dobs/shared/object';
 
 import { dynamicImport } from './load';
+import nodeExternal from './plugins/external';
 
 type HandlerType = (req: AppRequest, res: AppResponse) => any;
 
@@ -67,8 +68,7 @@ export async function createRouterMiddleware(
       dir: tempDirectory,
     },
     // exclude /node_modules/
-    // https://rolldown.rs/options/external
-    external: /^[^./]/,
+    plugins: [nodeExternal()],
   });
   let routes = createRoutes(config);
 
