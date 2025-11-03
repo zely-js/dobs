@@ -65,6 +65,7 @@ export async function createRouterMiddleware(
     output: {
       format: 'cjs',
       sourcemap: true,
+      esModule: true,
       dir: tempDirectory,
     },
     // exclude /node_modules/
