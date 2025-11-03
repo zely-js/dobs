@@ -1,0 +1,10 @@
+{
+  "name": "@playgrounds/default",
+  "version": "0.0.0",
+  "dependencies": {
+    "dobs": "workspace:*"
+  },
+  "scripts": {
+    "dev": "dobs dev"
+  }
+}
