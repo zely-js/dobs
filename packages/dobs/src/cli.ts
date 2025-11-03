@@ -3,6 +3,8 @@
 import animaux from 'animaux';
 import { load } from 'module-loader-ts';
 
+import chalk from 'chalk';
+
 import { createDobsServer } from '~/dobs/server';
 
 import { version } from '../package.json';
@@ -16,12 +18,16 @@ app
   .option('--port, -p', 'Provide server port')
   .option('--cwd', 'Provide cwd', process.cwd())
   .action(async ({ options }) => {
+    const startTime = performance.now();
     const config: ServerConfig =
       (await load('dobs.config', {
         extensions: ['.js', '.mjs', '.cjs', '.ts', '.mts', '.cts'],
       })) ?? {};
 
-    console.log(config);
+    // development mode
+    process.env.NODE_ENV = 'development';
+
+    // console.log(config);
     if (options.port) config.port = options.port;
     if (options.cwd) config.cwd = options.cwd;
 
@@ -29,7 +35,11 @@ app
 
     server.on('listening', () => {
       const port = options.port ?? config.port ?? 8080;
-      console.log(`server is running on http://localhost:${port}`);
+      console.log(
+        chalk.white(
+          `\n${chalk.dim('$')} Server is running on ${chalk.cyan(chalk.underline(chalk.bold(`http://localhost:${port}`)))}`,
+        ) + chalk.dim(` (Ready in ${(performance.now() - startTime).toFixed(2)}ms)\n`),
+      );
     });
   });
 
