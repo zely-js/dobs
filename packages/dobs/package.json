@@ -11,7 +11,7 @@
   "dependencies": {
     "@dobsjs/http": "workspace:*",
     "animaux": "^0.1.2",
-    "chalk": "4",
+    "chalk": "5",
     "chokidar": "^4.0.3",
     "deepmerge-ts": "^7.1.5",
     "module-loader-ts": "^0.0.5",
