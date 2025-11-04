@@ -28,7 +28,11 @@ interface Request<Params = any> extends IncomingMessage {
   /** raw body */
   rawBody: string;
 
-  /** params */
+  /**
+   * params
+   *
+   * You can access this value from external frameworks. (It will return undefined when using `@dobsjs/http` alone.)
+   */
   params: Params;
 }
 
