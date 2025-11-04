@@ -2,7 +2,6 @@ import { defineRoutes } from 'dobs';
 
 export default defineRoutes({
   GET(req, res) {
-    res.send('Dynamic Handler~!');
+    res.send(`${req.params.params.join(',')}`);
   },
-  POST: { message: 'This is static data' },
 });
