@@ -11,8 +11,6 @@
     "@types/encodeurl": "^1.0.3",
     "@types/mime-types": "^3.0.1",
     "@types/node": "^24.10.0",
-    "esbuild": "^0.18.14",
-    "esbuild-node-externals": "^1.8.0",
     "eslint": "^9.39.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
