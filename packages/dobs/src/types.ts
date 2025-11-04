@@ -8,14 +8,20 @@ import type { LooseObject, Promisable } from './_types';
 
 export type Handler = (req: AppRequest, res: AppResponse) => Promisable<any>;
 
-export type Routes = LooseObject<'ALL' | 'GET' | 'POST' | 'DELETE' | 'UPDATE', Handler>;
+export type Routes =
+  | LooseObject<
+      'ALL' | 'GET' | 'POST' | 'DELETE' | 'UPDATE',
+      Handler | Record<string, any>
+    >
+  | Handler;
 
 /**
  * Define route object.
  *
  * ```ts
  * export default defineRoutes({
- *    GET(req, res) { ... }
+ *    GET(req, res) { ... }, // dynamic handler
+ *    POST: { message: "hello world" } // static handler
  * });
  * ```
  *
