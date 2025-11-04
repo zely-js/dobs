@@ -14,7 +14,7 @@ import { lowercaseKeyObject } from '~/dobs/shared/object';
 import { dynamicImport } from './load';
 import nodeExternal from './plugins/external';
 
-type HandlerType = (req: AppRequest, res: AppResponse) => any;
+type HandlerType = ((req: AppRequest, res: AppResponse) => any) | Record<string, any>;
 
 interface PageTypeObject {
   [method: string]: HandlerType;
@@ -95,7 +95,9 @@ export async function createRouterMiddleware(
 
       if (matchedPage) cachedModule.delete(matchedPage);
 
-      console.log(`${chalk.blue('info')} server updated.`);
+      console.log(
+        `${chalk.blue('info')} server updated. ${chalk.gray.dim(`(${path})`.replace(/\\/g, '/'))}`,
+      );
     });
   }
 
@@ -120,6 +122,10 @@ export async function createRouterMiddleware(
       const handlers: PageType = pageModule;
 
       const execute = async (handler: HandlerType) => {
+        // static data
+        if (typeof handler !== 'function') return res.send(handler);
+
+        // dynamic data
         const response = await handler(req, res);
 
         if (!res.isWritable() && response) {
