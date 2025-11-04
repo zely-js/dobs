@@ -289,7 +289,8 @@ var require_dist = /* @__PURE__ */ __commonJS({ "../../packages/dobs/dist/index.
 	*
 	* ```ts
 	* export default defineRoutes({
-	*    GET(req, res) { ... }
+	*    GET(req, res) { ... }, // dynamic handler
+	*    POST: { message: "hello world" } // static handler
 	* });
 	* ```
 	*
@@ -304,9 +305,12 @@ var require_dist = /* @__PURE__ */ __commonJS({ "../../packages/dobs/dist/index.
 //#endregion
 //#region app/index.ts
 var import_dist = /* @__PURE__ */ __toESM$2(require_dist());
-var app_default = (0, import_dist.defineRoutes)({ ALL(req, res) {
-	res.send("Hello World~!");
-} });
+var app_default = (0, import_dist.defineRoutes)({
+	GET(req, res) {
+		res.send("Dynamic Handler");
+	},
+	POST: { message: "This is static data" }
+});
 
 //#endregion
 module.exports = app_default;
