@@ -1,4 +1,4 @@
-import { join, relative } from 'node:path';
+import { dirname, join, relative } from 'node:path';
 
 import type { AppRequest, AppResponse, Middleware } from '@dobsjs/http';
 import { build, BuildOptions, RolldownOutput } from 'rolldown';
@@ -13,7 +13,7 @@ import { lowercaseKeyObject } from '~/dobs/shared/object';
 
 import { dynamicImport } from './load';
 import nodeExternal from './plugins/external';
-import { writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync } from 'node:fs';
 
 type HandlerType = ((req: AppRequest, res: AppResponse) => any) | Record<string, any>;
 
@@ -60,12 +60,14 @@ function buildFiles(output: RolldownOutput, tempDirectory: string) {
   for (const chunk of output.output) {
     if (chunk.type === 'chunk') {
       const filePath = join(tempDirectory, chunk.fileName);
+      mkdirSync(dirname(filePath), { recursive: true });
       writeFileSync(filePath, chunk.code, 'utf8');
       for (const inputPath of Object.keys(chunk.modules)) {
         fileMap.set(inputPath, filePath);
       }
     } else if (chunk.type === 'asset' && typeof chunk.source === 'string') {
       const filePath = join(tempDirectory, chunk.fileName);
+      mkdirSync(dirname(filePath), { recursive: true });
       writeFileSync(filePath, chunk.source, 'utf8');
     }
   }
