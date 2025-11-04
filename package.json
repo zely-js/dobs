@@ -13,7 +13,7 @@
     "@types/node": "^18.11.10",
     "esbuild": "^0.18.14",
     "esbuild-node-externals": "^1.8.0",
-    "eslint": "^9.22.0",
+    "eslint": "^9.39.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prettier": "^5.2.3",
