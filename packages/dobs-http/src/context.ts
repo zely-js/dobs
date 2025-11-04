@@ -123,10 +123,12 @@ interface Response extends ServerResponse {
   // data sending
 
   /**
-   * Send data (alias as res.end)
+   * Automatically detects the data type and sends it in the appropriate format (supports Buffer, string, object, number, etc.).
    *
+   * Use `res.end()` if you want to send raw data directly.
    * ```ts
-   * res.send("");
+   * res.send(""); // string
+   * res.send({}); // object
    * ```
    * @param data data
    */
