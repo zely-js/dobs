@@ -19,10 +19,15 @@ app
   .option('--cwd', 'Provide cwd', process.cwd())
   .action(async ({ options }) => {
     const startTime = performance.now();
-    const config: ServerConfig =
-      (await load('dobs.config', {
+    let config: ServerConfig = {};
+
+    if (options.config) {
+      config = await load(options.config);
+    } else {
+      config = await load('dobs.config', {
         extensions: ['.js', '.mjs', '.cjs', '.ts', '.mts', '.cts'],
-      })) ?? {};
+      });
+    }
 
     // development mode
     process.env.NODE_ENV = 'development';

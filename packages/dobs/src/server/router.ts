@@ -1,18 +1,19 @@
 import { join, relative } from 'node:path';
 
 import type { AppRequest, AppResponse, Middleware } from '@dobsjs/http';
-import { build, BuildOptions } from 'rolldown';
+import { build, BuildOptions, RolldownOutput } from 'rolldown';
 import chokidar from 'chokidar';
 import chalk from 'chalk';
 
 import type { ResolvedServerConfig } from '~/dobs/config';
 import { scanDirectory } from '~/dobs/shared/fs';
-import { convertPathToRegex } from '~/dobs/shared/urlPath';
-import { changeExtension, isSamePath } from '~/dobs/shared/path';
+import { convertPathToRegex, matchUrlToRoute } from '~/dobs/shared/urlPath';
+import { isSamePath } from '~/dobs/shared/path';
 import { lowercaseKeyObject } from '~/dobs/shared/object';
 
 import { dynamicImport } from './load';
 import nodeExternal from './plugins/external';
+import { writeFileSync } from 'node:fs';
 
 type HandlerType = ((req: AppRequest, res: AppResponse) => any) | Record<string, any>;
 
@@ -53,6 +54,32 @@ function createRoutes(config: ResolvedServerConfig) {
   return rawRoutes.sort((a, b) => routeScore(a) - routeScore(b));
 }
 
+function buildFiles(output: RolldownOutput, tempDirectory: string) {
+  const fileMap = new Map<string, string>();
+
+  for (const chunk of output.output) {
+    if (chunk.type === 'chunk') {
+      const filePath = join(tempDirectory, chunk.fileName);
+      writeFileSync(filePath, chunk.code, 'utf8');
+      for (const inputPath of Object.keys(chunk.modules)) {
+        fileMap.set(inputPath, filePath);
+      }
+    } else if (chunk.type === 'asset' && typeof chunk.source === 'string') {
+      const filePath = join(tempDirectory, chunk.fileName);
+      writeFileSync(filePath, chunk.source, 'utf8');
+    }
+  }
+
+  return fileMap;
+}
+
+function findFile(file: string, map: Map<string, string>) {
+  for (const [key, value] of map) {
+    if (isSamePath(key, file)) return value;
+  }
+  return null;
+}
+
 export async function createRouterMiddleware(
   config: ResolvedServerConfig,
 ): Promise<Middleware> {
@@ -68,13 +95,15 @@ export async function createRouterMiddleware(
       esModule: true,
       dir: tempDirectory,
     },
+    write: false,
     // exclude /node_modules/
     plugins: [nodeExternal()],
   });
   let routes = createRoutes(config);
 
   // build initially (prod/dev)
-  await build(buildOption());
+  const output = await build(buildOption());
+  let builtMap = buildFiles(output, tempDirectory);
 
   // development mode / $ dobs dev
   if (process.env.NODE_ENV === 'development') {
@@ -86,7 +115,9 @@ export async function createRouterMiddleware(
     watcher.on('all', async (evt, path) => {
       // rebuild server
       routes = createRoutes(config);
-      await build(buildOption());
+
+      const output = await build(buildOption());
+      builtMap = buildFiles(output, tempDirectory);
 
       // find updated page
       const matchedPage = Array.from(cachedModule.keys()).find((key) =>
@@ -107,15 +138,16 @@ export async function createRouterMiddleware(
 
     if (!route) return next(); // 404
     if (!cachedModule.has(route.relativePath)) {
-      cachedModule.set(
-        route.relativePath,
-        await dynamicImport(
-          changeExtension(join(tempDirectory, route.relativePath), '.js'),
-        ),
-      );
+      const foundFile = findFile(join(routesDirectory, route.relativePath), builtMap);
+
+      cachedModule.set(route.relativePath, await dynamicImport(foundFile));
     }
 
     const pageModule = cachedModule.get(route.relativePath);
+    const params = matchUrlToRoute(url, route);
+
+    // set params
+    req.params = params;
 
     try {
       const method = (req.method || '').toLocaleLowerCase();
