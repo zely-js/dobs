@@ -1729,12 +1729,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^18.11.10":
-  version: 18.19.130
-  resolution: "@types/node@npm:18.19.130"
+"@types/node@npm:^24.10.0":
+  version: 24.10.0
+  resolution: "@types/node@npm:24.10.0"
   dependencies:
-    undici-types: "npm:~5.26.4"
-  checksum: 10c0/22ba2bc9f8863101a7e90a56aaeba1eb3ebdc51e847cef4a6d188967ab1acbce9b4f92251372fd0329ecb924bbf610509e122c3dfe346c04dbad04013d4ad7d0
+    undici-types: "npm:~7.16.0"
+  checksum: 10c0/f82ed7194e16f5590ef7afdc20c6d09068c76d50278b485ede8f0c5749683536e3064ffa8def8db76915196afb3724b854aa5723c64d6571b890b14492943b46
   languageName: node
   linkType: hard
 
@@ -5029,7 +5029,7 @@ __metadata:
     "@swc-node/register": "npm:^1.11.1"
     "@types/encodeurl": "npm:^1.0.3"
     "@types/mime-types": "npm:^3.0.1"
-    "@types/node": "npm:^18.11.10"
+    "@types/node": "npm:^24.10.0"
     esbuild: "npm:^0.18.14"
     esbuild-node-externals: "npm:^1.8.0"
     eslint: "npm:^9.39.0"
@@ -5737,10 +5737,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici-types@npm:~5.26.4":
-  version: 5.26.5
-  resolution: "undici-types@npm:5.26.5"
-  checksum: 10c0/bb673d7876c2d411b6eb6c560e0c571eef4a01c1c19925175d16e3a30c4c428181fb8d7ae802a261f283e4166a0ac435e2f505743aa9e45d893f9a3df017b501
+"undici-types@npm:~7.16.0":
+  version: 7.16.0
+  resolution: "undici-types@npm:7.16.0"
+  checksum: 10c0/3033e2f2b5c9f1504bdc5934646cb54e37ecaca0f9249c983f7b1fc2e87c6d18399ebb05dc7fd5419e02b2e915f734d872a65da2e3eeed1813951c427d33cc9a
   languageName: node
   linkType: hard
 
