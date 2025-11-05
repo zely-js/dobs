@@ -7,7 +7,10 @@
   "repository": "https://github.com/zely-js/dobs",
   "description": "",
   "files": [
-    "dist"
+    "dist",
+    "common-template",
+    "with-javascript",
+    "with-typescript"
   ],
   "dependencies": {
     "@clack/prompts": "0.11",
