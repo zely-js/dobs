@@ -9,6 +9,7 @@ import { createDobsServer } from '~/dobs/server';
 
 import { version } from '../package.json';
 import { ServerConfig } from './config';
+import { join } from 'node:path';
 
 const app = animaux({ name: 'dobs', version: version });
 
@@ -21,10 +22,12 @@ app
     const startTime = performance.now();
     let config: ServerConfig = {};
 
+    const cwd = options.cwd ?? process.cwd();
+
     if (options.config) {
       config = await load(options.config);
     } else {
-      config = await load('dobs.config', {
+      config = await load(join(cwd, './dobs.config'), {
         extensions: ['.js', '.mjs', '.cjs', '.ts', '.mts', '.cts'],
       });
     }
