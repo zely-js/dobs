@@ -37,7 +37,7 @@ function routeScore(route: { params: string[]; regex: RegExp }) {
 /**
  * Create routes by filename and sort it by params length
  */
-function createRoutes(config: ResolvedServerConfig) {
+export function createRoutes(config: ResolvedServerConfig) {
   const routesDirectory = join(config.cwd, 'app');
   const files = scanDirectory(routesDirectory);
   const relativeFiles = files.map((file) => relative(routesDirectory, file));
@@ -54,7 +54,7 @@ function createRoutes(config: ResolvedServerConfig) {
   return rawRoutes.sort((a, b) => routeScore(a) - routeScore(b));
 }
 
-function buildFiles(output: RolldownOutput, tempDirectory: string) {
+export function buildFiles(output: RolldownOutput, tempDirectory: string) {
   const fileMap = new Map<string, string>();
 
   for (const chunk of output.output) {
@@ -82,13 +82,66 @@ function findFile(file: string, map: Map<string, string>) {
   return null;
 }
 
+export function createInternalRouter(
+  config: ResolvedServerConfig,
+  routes: any[],
+  builtMap: Map<string, string>,
+  cachedModule: Map<string, any>,
+  preloadedModules?: Map<string, any>,
+) {
+  const routesDirectory = join(config.cwd, 'app');
+
+  const matchRoute = (url: string) => routes.find((route) => route.regex.test(url));
+
+  return async (req, res, next) => {
+    const url = req.URL.pathname;
+    const route = matchRoute(url);
+
+    if (!route) return next(); // 404
+
+    if (preloadedModules?.has(route.relativePath)) {
+      cachedModule.set(route.relativePath, preloadedModules.get(route.relativePath));
+    } else if (!cachedModule.has(route.relativePath)) {
+      const foundFile = findFile(join(routesDirectory, route.relativePath), builtMap);
+      cachedModule.set(route.relativePath, await dynamicImport(foundFile));
+    }
+
+    const pageModule = cachedModule.get(route.relativePath);
+    const params = matchUrlToRoute(url, route);
+    req.params = params;
+
+    try {
+      const method = (req.method || '').toLowerCase();
+      const handlers: PageType = pageModule;
+
+      const execute = async (handler: HandlerType) => {
+        if (typeof handler !== 'function') return res.send(handler);
+        const response = await handler(req, res);
+        if (!res.isWritable() && response) res.send(response);
+      };
+
+      if (typeof handlers === 'function') {
+        return execute(handlers);
+      }
+
+      const handlerObject: Record<string, HandlerType> = lowercaseKeyObject(
+        handlers,
+      ) as any;
+
+      if (handlerObject.all) await execute(handlerObject.all);
+      if (handlerObject[method]) await execute(handlerObject[method]);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+}
+
 export async function createRouterMiddleware(
   config: ResolvedServerConfig,
 ): Promise<Middleware> {
   const routesDirectory = join(config.cwd, 'app');
   const tempDirectory = join(config.cwd, config.temp, 'routes');
   const cachedModule = new Map<string, any>();
-  const matchRoute = (url: string) => routes.find((route) => route.regex.test(url));
   const buildOption: () => BuildOptions = () => ({
     input: routes.map((route) => join(routesDirectory, route.relativePath)),
     output: {
@@ -134,51 +187,5 @@ export async function createRouterMiddleware(
     });
   }
 
-  return async (req, res, next) => {
-    const url = req.URL.pathname;
-    const route = matchRoute(url);
-
-    if (!route) return next(); // 404
-    if (!cachedModule.has(route.relativePath)) {
-      const foundFile = findFile(join(routesDirectory, route.relativePath), builtMap);
-
-      cachedModule.set(route.relativePath, await dynamicImport(foundFile));
-    }
-
-    const pageModule = cachedModule.get(route.relativePath);
-    const params = matchUrlToRoute(url, route);
-
-    // set params
-    req.params = params;
-
-    try {
-      const method = (req.method || '').toLocaleLowerCase();
-      const handlers: PageType = pageModule;
-
-      const execute = async (handler: HandlerType) => {
-        // static data
-        if (typeof handler !== 'function') return res.send(handler);
-
-        // dynamic data
-        const response = await handler(req, res);
-
-        if (!res.isWritable() && response) {
-          res.send(response);
-        }
-      };
-
-      if (typeof handlers === 'function') {
-        return execute(handlers);
-      }
-
-      const handlerObject: Record<string, HandlerType> = lowercaseKeyObject(
-        handlers,
-      ) as any;
-
-      if (handlerObject.all) execute(handlerObject.all);
-      if (handlerObject[method]) execute(handlerObject[method]);
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  return createInternalRouter(config, routes, builtMap, cachedModule);
 }
