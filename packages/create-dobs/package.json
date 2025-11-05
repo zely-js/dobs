@@ -1,0 +1,18 @@
+{
+  "name": "create-dobs",
+  "version": "0.0.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": "./dist/index.js",
+  "repository": "https://github.com/zely-js/dobs",
+  "description": "",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@clack/prompts": "0.11",
+    "animaux": "^0.1.2",
+    "chalk": "4",
+    "cross-spawn": "^7.0.6"
+  }
+}
