@@ -8,8 +8,9 @@ import chalk from 'chalk';
 import { createDobsServer } from '~/dobs/server';
 
 import { version } from '../package.json';
-import { ServerConfig } from './config';
+import { resolveConfig, ServerConfig } from './config';
 import { join } from 'node:path';
+import { buildServer } from './builder';
 
 const app = animaux({ name: 'dobs', version: version });
 
@@ -49,6 +50,28 @@ app
         ) + chalk.dim(` (Ready in ${(performance.now() - startTime).toFixed(2)}ms)\n`),
       );
     });
+  });
+
+app
+  .command('build')
+  .option('--config, -c', 'Provide config file path')
+  .option('--cwd', 'Provide cwd', process.cwd())
+  .action(async ({ options }) => {
+    const startTime = performance.now();
+    let config: ServerConfig = {};
+
+    const cwd = options.cwd ?? process.cwd();
+
+    if (options.config) {
+      config = await load(options.config);
+    } else {
+      config = await load(join(cwd, './dobs.config'), {
+        extensions: ['.js', '.mjs', '.cjs', '.ts', '.mts', '.cts'],
+      });
+    }
+    await buildServer(resolveConfig(config));
+
+    console.log(`Done in ${(performance.now() - startTime).toFixed(2)}ms`);
   });
 
 app.parse(process.argv.slice(2));

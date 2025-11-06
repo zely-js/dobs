@@ -4832,6 +4832,7 @@ __metadata:
     "@types/encodeurl": "npm:^1.0.3"
     "@types/mime-types": "npm:^3.0.1"
     "@types/node": "npm:^24.10.0"
+    cross-spawn: "npm:^7.0.6"
     eslint: "npm:^9.39.0"
     eslint-config-prettier: "npm:^10.1.8"
     eslint-plugin-import: "npm:^2.32.0"

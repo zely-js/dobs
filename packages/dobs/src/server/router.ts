@@ -75,7 +75,7 @@ export function buildFiles(output: RolldownOutput, tempDirectory: string) {
   return fileMap;
 }
 
-function findFile(file: string, map: Map<string, string>) {
+export function findFile(file: string, map: Map<string, string>) {
   for (const [key, value] of map) {
     if (isSamePath(key, file)) return value;
   }

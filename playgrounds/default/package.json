@@ -5,6 +5,7 @@
     "dobs": "workspace:*"
   },
   "scripts": {
-    "dev": "dobs dev"
+    "dev": "dobs dev",
+    "build": "dobs build"
   }
 }
