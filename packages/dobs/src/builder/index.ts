@@ -1,10 +1,12 @@
-import { build, BuildOptions } from 'rolldown';
-import { ResolvedServerConfig } from '../config';
-import { join } from 'node:path';
-import nodeExternal from '../server/plugins/external';
-import { buildFiles, createRoutes, findFile } from '../server/router';
-import { compileModule } from 'module-loader-ts';
 import { writeFileSync } from 'node:fs';
+import { join } from 'node:path';
+
+import { build, BuildOptions } from 'rolldown';
+import { compileModule } from 'module-loader-ts';
+
+import nodeExternal from '~/dobs/server/plugins/external';
+import { buildFiles, createRoutes, findFile } from '~/dobs/server/router';
+import { ResolvedServerConfig } from '~/dobs/config';
 
 export async function buildServer(config: ResolvedServerConfig) {
   const routesDirectory = join(config.cwd, 'app');

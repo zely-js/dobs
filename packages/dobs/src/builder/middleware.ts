@@ -1,7 +1,8 @@
 import { Middleware } from '@dobsjs/http';
-import { createInternalRouter } from '../server/router';
-import { convertPathToRegex } from '../shared/urlPath';
-import { ResolvedServerConfig } from '../config';
+
+import { createInternalRouter } from '~/dobs/server/router';
+import { convertPathToRegex } from '~/dobs/shared/urlPath';
+import { ResolvedServerConfig } from '~/dobs/config';
 
 interface Route {
   regex: RegExp;
