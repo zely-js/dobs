@@ -92,12 +92,23 @@ function randomString(length = 8) {
 }
 
 export async function load(input: string, options?: LoadOption) {
+  const [mod, temp] = await compileModule(input, options);
+
+  if (temp) unlinkSync(temp);
+
+  return mod;
+}
+
+export async function compileModule(
+  input: string,
+  options?: LoadOption,
+): Promise<[any, string]> {
   const target = findTarget(input, options);
 
-  if (!target) return;
+  if (!target) return [null, null];
 
   if (target.type === 'js' || target.type === 'json') {
-    return await dynamicImport(target.file);
+    return [await dynamicImport(target.file), null];
   }
 
   const temp = join(__dirname, `../../.temp/${randomString()}.js`);
@@ -128,8 +139,5 @@ export async function load(input: string, options?: LoadOption) {
 
   const mod = await dynamicImport(temp);
 
-  unlinkSync(temp);
-  unlinkSync(tempPackagejson);
-
-  return mod;
+  return [mod, temp];
 }

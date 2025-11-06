@@ -8,6 +8,28 @@
   "files": [
     "dist"
   ],
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./_build": {
+      "import": {
+        "types": "./dist/exports.d.mts",
+        "default": "./dist/exports.mjs"
+      },
+      "require": {
+        "types": "./dist/exports.d.ts",
+        "default": "./dist/exports.js"
+      }
+    }
+  },
   "dependencies": {
     "@dobsjs/http": "workspace:*",
     "animaux": "^0.1.2",

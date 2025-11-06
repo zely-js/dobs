@@ -1,16 +1,23 @@
 import { describe, it, expect } from 'vitest';
-import { createDobsServer } from 'dobs';
 
-// ## create server ##
+import { buildServer, resolveConfig } from 'dobs';
+import { join } from 'node:path';
+
+// ## build server ##
 
 beforeAll(async () => {
-  await createDobsServer({ cwd: __dirname, port: 5555 });
+  await buildServer(resolveConfig({ port: 8888, cwd: __dirname }));
+
+  // @ts-ignore
+  process.env.PORT = 8888;
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  require(join(__dirname, 'dist', '_temp.js').replace(/\\/g, '/'));
 });
 
 // ## test ##
 
 const fetchPage = (path: string, method: string = 'get') =>
-  fetch(`http://localhost:5555${path}`, { method });
+  fetch(`http://localhost:8888${path}`, { method });
 const fetchAsJSON = async (path: string, method: string = 'get') =>
   await (await fetchPage(path, method)).json();
 const fetchAsText = async (path: string, method: string = 'get') =>

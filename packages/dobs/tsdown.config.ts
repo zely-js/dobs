@@ -7,6 +7,11 @@ export default defineConfig([
     format: ['cjs', 'esm'],
   },
   {
+    entry: './src/builder/exports.ts',
+    platform: 'node',
+    format: ['cjs', 'esm'],
+  },
+  {
     entry: './src/cli.ts',
     platform: 'node',
     format: ['cjs'],
