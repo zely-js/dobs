@@ -25,17 +25,6 @@ export default function nodeExternal(options: ExcludeNodeModulesOptions = {}): P
       // include relative path
       if (source.startsWith('.') || source.startsWith('/')) return null;
 
-      const resolved = await this.resolve(source, importer, { skipSelf: true }).catch(
-        () => null,
-      );
-      if (resolved && resolved.id) {
-        if (resolved.id.includes('node_modules'))
-          // exclude node modules
-          return { id: source, external: true } as any;
-        return null;
-      }
-
-      // failed to resolve
       return { id: source, external: true } as any;
     },
   };
