@@ -3345,7 +3345,7 @@ __metadata:
     chalk: "npm:4"
     chokidar: "npm:^4.0.3"
     deepmerge-ts: "npm:^7.1.5"
-    module-loader-ts: "npm:^0.0.1-alpha.4"
+    module-loader-ts: "npm:^0.0.1-alpha.6"
     rolldown: "npm:^1.0.0-beta.46"
   bin:
     dobs: ./dist/cli.js
@@ -5413,7 +5413,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"module-loader-ts@npm:^0.0.1-alpha.4, module-loader-ts@workspace:packages/module-loader":
+"module-loader-ts@npm:^0.0.1-alpha.6, module-loader-ts@workspace:packages/module-loader":
   version: 0.0.0-use.local
   resolution: "module-loader-ts@workspace:packages/module-loader"
   dependencies:
