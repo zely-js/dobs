@@ -141,6 +141,7 @@ export async function createRouterMiddleware(
 ): Promise<Middleware> {
   const routesDirectory = join(config.cwd, 'app');
   const tempDirectory = join(config.cwd, config.temp, 'routes');
+  const tempDirectoryPackageJSON = join(config.cwd, config.temp, 'package.json');
   const cachedModule = new Map<string, any>();
   const buildOption: () => BuildOptions = () => ({
     input: routes.map((route) => join(routesDirectory, route.relativePath)),
@@ -159,6 +160,9 @@ export async function createRouterMiddleware(
   // build initially (prod/dev)
   const output = await build(buildOption());
   let builtMap = buildFiles(output, tempDirectory);
+
+  // write package.json
+  writeFileSync(tempDirectoryPackageJSON, JSON.stringify({ type: 'commonjs' }));
 
   // development mode / $ dobs dev
   if (process.env.NODE_ENV === 'development') {

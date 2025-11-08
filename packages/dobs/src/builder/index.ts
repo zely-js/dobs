@@ -14,6 +14,7 @@ export async function buildServer(config: ResolvedServerConfig) {
 
   const tempFile = join(tempDirectory, '_temp.js');
   const outputFile = join(config.cwd, config.build.directory, 'index.js');
+  const outputFilePackageJSON = join(config.cwd, config.build.directory, 'package.json');
 
   const routes = createRoutes(config);
   const buildOption: () => BuildOptions = () => ({
@@ -72,6 +73,8 @@ _app.listen(process.env.PORT ?? _config.port, () => {console.log("server is runn
     },
     plugins: [nodeExternal({ allow: [formattedConfigFile.slice(1, -1)] })],
   });
+
+  writeFileSync(outputFilePackageJSON, JSON.stringify({ type: 'commonjs' }));
 
   return outputFile;
 }
