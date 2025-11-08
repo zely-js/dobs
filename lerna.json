@@ -1,5 +1,12 @@
 {
-  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
+  "$schema": "node_modules/@lerna-lite/cli/schemas/lerna-schema.json",
   "version": "0.0.1-alpha.2",
-  "npmClient": "yarn"
+  "npmClient": "yarn",
+  "command": {
+    "publish": {
+      "conventionalCommits": true,
+      "message": "chore(release): publish new version %v"
+    }
+  },
+  "packages": ["packages/*"]
 }
