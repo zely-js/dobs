@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/@lerna-lite/cli/schemas/lerna-schema.json",
-  "version": "0.0.1-alpha.2",
+  "version": "0.0.1-alpha.3",
   "npmClient": "yarn",
   "command": {
     "publish": {
@@ -8,5 +8,7 @@
       "message": "chore(release): publish new version %v"
     }
   },
-  "packages": ["packages/*"]
+  "packages": [
+    "packages/*"
+  ]
 }
