@@ -13,7 +13,6 @@
     "rootDir": ".",
     "paths": {
       "~/dobs/*": ["./packages/dobs/src/*"],
-      "~/build/*": ["./packages/dobs-compiler/*"]
     }
   }
 }
