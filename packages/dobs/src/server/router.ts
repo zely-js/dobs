@@ -62,6 +62,8 @@ export function buildFiles(output: RolldownOutput, tempDirectory: string) {
       const filePath = join(tempDirectory, chunk.fileName);
       mkdirSync(dirname(filePath), { recursive: true });
       writeFileSync(filePath, chunk.code, 'utf8');
+      console.log(`[${filePath}] ${chunk.code}`);
+
       for (const inputPath of Object.keys(chunk.modules)) {
         fileMap.set(inputPath, filePath);
       }
@@ -69,6 +71,7 @@ export function buildFiles(output: RolldownOutput, tempDirectory: string) {
       const filePath = join(tempDirectory, chunk.fileName);
       mkdirSync(dirname(filePath), { recursive: true });
       writeFileSync(filePath, chunk.source, 'utf8');
+      console.log(`[${filePath}] ${chunk.source}`);
     }
   }
 

@@ -3,7 +3,7 @@
   "workspaces": [
     "packages/*",
     "playgrounds/**/*",
-    "test/**/*"
+    "test"
   ],
   "license": "MIT",
   "devDependencies": {
@@ -36,7 +36,7 @@
   },
   "scripts": {
     "lint-fix": "eslint --fix --ext .js,.ts .",
-    "test": "vitest",
+    "test": "vitest run",
     "build": "tsdown",
     "run-script": "node -r @swc-node/register"
   },

@@ -7240,6 +7240,14 @@ __metadata:
   languageName: node
   linkType: hard
 
+"test@workspace:test":
+  version: 0.0.0-use.local
+  resolution: "test@workspace:test"
+  dependencies:
+    dobs: "workspace:*"
+  languageName: unknown
+  linkType: soft
+
 "tinybench@npm:^2.9.0":
   version: 2.9.0
   resolution: "tinybench@npm:2.9.0"
