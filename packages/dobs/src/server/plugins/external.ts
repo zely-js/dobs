@@ -14,6 +14,8 @@ export default function nodeExternal(options: ExcludeNodeModulesOptions = {}): P
   return {
     name: 'dobs:exclude-node-modules',
     async resolveId(source: string, importer?: string | undefined) {
+      // console.log(source, allowSet.has(source), allowSet);
+
       // entry module
       if (!importer) return null;
       // virtual module

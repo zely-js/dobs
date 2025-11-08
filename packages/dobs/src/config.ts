@@ -21,15 +21,6 @@ export interface ResolvedServerConfig {
    */
   temp: string;
 
-  _internal: {
-    preloaded_modules: Record<string, any>;
-    /**
-     * + `default` : use file routes (default)
-     * + `force-preloaded-modules` : use preloaded pages (no disk files)
-     */
-    mode: 'default' | 'force-preloaded-modules';
-  };
-
   build: {
     /**
      * build output directory (relative)
@@ -47,10 +38,6 @@ export const DEFAULT_CONFIG: ResolvedServerConfig = {
   cwd: process.cwd(),
   mode: 'serve',
   temp: './.dobs/',
-  _internal: {
-    mode: 'default',
-    preloaded_modules: {},
-  },
   build: {
     directory: 'dist',
   },

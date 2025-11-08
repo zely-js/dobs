@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { describe, it, expect } from 'vitest';
 
 import { buildServer, resolveConfig } from 'dobs';
@@ -8,10 +9,10 @@ import { join } from 'node:path';
 beforeAll(async () => {
   await buildServer(resolveConfig({ port: 8888, cwd: __dirname }));
 
-  // @ts-ignore
+  // @ts-expect-error
   process.env.PORT = 8888;
   // eslint-disable-next-line @typescript-eslint/no-require-imports
-  require(join(__dirname, 'dist', '_temp.js').replace(/\\/g, '/'));
+  require(join(__dirname, 'dist', 'index.js').replace(/\\/g, '/'));
 });
 
 // ## test ##
