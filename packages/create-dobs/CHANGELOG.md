@@ -5,8 +5,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.0.1-alpha.4](https://github.com/zely-js/dobs/compare/v0.0.1-alpha.3...v0.0.1-alpha.4) (2025-11-08)
 
-**Note:** Version bump only for package dobs
-
-## [0.0.1-alpha.3](https://github.com/zely-js/dobs/compare/v0.0.1-alpha.2...v0.0.1-alpha.3) (2025-11-08)
-
-**Note:** Version bump only for package dobs
+**Note:** Version bump only for package create-dobs
