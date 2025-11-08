@@ -1,6 +1,7 @@
 {
   "name": "@playgrounds/default",
   "version": "0.0.1-alpha.0",
+  "private": true,
   "dependencies": {
     "dobs": "workspace:*"
   },
