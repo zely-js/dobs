@@ -15,22 +15,6 @@ export type Routes =
     >
   | Handler;
 
-/**
- * Define route object.
- *
- * ```ts
- * export default defineRoutes({
- *    GET(req, res) { ... }, // dynamic handler
- *    POST: { message: "hello world" } // static handler
- * });
- * ```
- *
- * @param routes routes object.
- */
-export function defineRoutes(routes: Routes) {
-  return routes;
-}
-
 export function defineConfig(userConfig: Omit<ServerConfig, 'mode'>) {
   return userConfig;
 }

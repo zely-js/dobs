@@ -12,6 +12,11 @@ export default defineConfig([
     format: ['cjs', 'esm'],
   },
   {
+    entry: './src/experimental.ts',
+    platform: 'node',
+    format: ['cjs', 'esm'],
+  },
+  {
     entry: './src/cli.ts',
     platform: 'node',
     format: ['cjs'],
