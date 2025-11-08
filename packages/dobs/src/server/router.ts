@@ -154,6 +154,9 @@ export async function createRouterMiddleware(
       esModule: true,
       dir: tempDirectory,
     },
+    resolve: {
+      conditionNames: ['require', 'node', 'default'],
+    },
     write: false,
     // exclude /node_modules/
     plugins: [nodeExternal()],
