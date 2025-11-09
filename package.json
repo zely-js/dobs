@@ -38,7 +38,8 @@
     "lint-fix": "eslint --fix --ext .js,.ts .",
     "test": "vitest run",
     "build": "tsdown",
-    "run-script": "node -r @swc-node/register"
+    "run-script": "node -r @swc-node/register",
+    "publish": "lerna version && yarn build && lerna publish from-package"
   },
   "version": "0.0.0",
   "packageManager": "yarn@4.10.3"
