@@ -122,12 +122,17 @@ export async function compileModule(
 
   const buildOptions: BuildOptions = {
     input: target.file,
+
     output: {
       file: temp,
       format: 'cjs',
       esModule: true,
     },
-    tsconfig: existsSync(tsconfig) ? tsconfig : undefined,
+
+    resolve: {
+      tsconfigFilename: existsSync(tsconfig) ? tsconfig : undefined,
+    },
+
     platform: 'node',
     logLevel: 'silent',
     plugins: [nodeExternal()],
