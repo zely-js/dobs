@@ -10,6 +10,6 @@ import { Routes } from './types';
  * });
  * ```
  */
-export function defineRoutes(routes: Routes, wrappers: any[] = []) {
+export function defineRoutes(routes: Routes, wrappers: any[] = []): Routes {
   return wrappers.reduce((acc, wrapper) => wrapper(acc), routes);
 }

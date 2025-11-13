@@ -14,6 +14,7 @@ import { lowercaseKeyObject } from '~/dobs/shared/object';
 import { dynamicImport } from './load';
 import nodeExternal from './plugins/external';
 import { mkdirSync, writeFileSync } from 'node:fs';
+import { createPluginRunner } from '../plugin';
 
 type HandlerType = ((req: AppRequest, res: AppResponse) => any) | Record<string, any>;
 
@@ -90,6 +91,7 @@ export function createInternalRouter(
   cachedModule: Map<string, any>,
   preloadedModules?: Map<string, any>,
 ) {
+  const pluginRunner = createPluginRunner(config.plugins);
   const routesDirectory = join(config.cwd, 'app');
 
   const matchRoute = (url: string) => routes.find((route) => route.regex.test(url));
@@ -113,7 +115,7 @@ export function createInternalRouter(
 
     try {
       const method = (req.method || '').toLowerCase();
-      const handlers: PageType = pageModule;
+      const handlers: PageType = await pluginRunner.execute('generateRoute', pageModule);
 
       const execute = async (handler: HandlerType) => {
         if (typeof handler !== 'function') return res.send(handler);
@@ -140,25 +142,35 @@ export function createInternalRouter(
 export async function createRouterMiddleware(
   config: ResolvedServerConfig,
 ): Promise<Middleware> {
+  const pluginRunner = createPluginRunner(config.plugins);
+
   const routesDirectory = join(config.cwd, 'app');
   const tempDirectory = join(config.cwd, config.temp, 'routes');
   const tempDirectoryPackageJSON = join(config.cwd, config.temp, 'package.json');
+
   const cachedModule = new Map<string, any>();
-  const buildOption: () => BuildOptions = () => ({
-    input: routes.map((route) => join(routesDirectory, route.relativePath)),
-    output: {
-      format: 'cjs',
-      sourcemap: true,
-      esModule: true,
-      dir: tempDirectory,
-    },
-    resolve: {
-      conditionNames: ['require', 'node', 'default'],
-    },
-    write: false,
-    // exclude /node_modules/
-    plugins: [nodeExternal()],
-  });
+  const buildOption: () => BuildOptions = () => {
+    const bo: BuildOptions = {
+      input: routes.map((route) => join(routesDirectory, route.relativePath)),
+      output: {
+        format: 'cjs',
+        sourcemap: true,
+        esModule: true,
+        dir: tempDirectory,
+      },
+      resolve: {
+        conditionNames: ['require', 'node', 'default'],
+      },
+      write: false,
+      // exclude /node_modules/
+      plugins: [nodeExternal()],
+    };
+
+    // [plugin] execute plugin.resolveBuildOptions
+    pluginRunner.execute('resolveBuildOptions', bo);
+
+    return bo;
+  };
   let routes = createRoutes(config);
 
   // build initially (prod/dev)

@@ -2,6 +2,7 @@ import { Server } from 'node:http';
 import httpServer, { Middleware } from '@dobsjs/http';
 import { resolveConfig, ServerConfig } from '~/dobs/config';
 import { createRouterMiddleware } from './router';
+import { createPluginRunner } from '../plugin';
 
 type CreateServerReturn<T extends ServerConfig> = T['mode'] extends 'middleware'
   ? Middleware[]
@@ -10,6 +11,12 @@ type CreateServerReturn<T extends ServerConfig> = T['mode'] extends 'middleware'
 export async function createDobsServer<T extends ServerConfig>(
   config?: T,
 ): Promise<CreateServerReturn<T>> {
+  const plugins = config?.plugins || [];
+  const runner = createPluginRunner(plugins);
+
+  // [plugin] execute plugin.config
+  await runner.execute('config', config);
+
   const resolvedConfig = resolveConfig(config);
   const server = httpServer(resolvedConfig.createServer);
 

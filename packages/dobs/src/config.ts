@@ -1,6 +1,7 @@
 import { createServer } from 'node:http';
 import type { Middleware } from '@dobsjs/http';
 import { deepmerge } from 'deepmerge-ts';
+import { createPluginRunner, Plugin } from './plugin';
 
 export interface ResolvedServerConfig {
   /** port to serve (default: 8080) */
@@ -27,6 +28,8 @@ export interface ResolvedServerConfig {
      */
     directory: string;
   };
+
+  plugins: Plugin[];
 }
 
 export type ServerConfig = Partial<ResolvedServerConfig>;
@@ -41,8 +44,19 @@ export const DEFAULT_CONFIG: ResolvedServerConfig = {
   build: {
     directory: 'dist',
   },
+  plugins: [],
 };
 
 export function resolveConfig(config: ServerConfig): ResolvedServerConfig {
-  return deepmerge(DEFAULT_CONFIG, config) as ResolvedServerConfig;
+  const runner = createPluginRunner(config?.plugins ?? []);
+
+  // [plugin] execute plugin.config
+  runner.execute('config', config);
+
+  const resolvedConfig = deepmerge(DEFAULT_CONFIG, config) as ResolvedServerConfig;
+
+  // [plugin] execute plugin.resolvedConfig
+  runner.execute('resolvedConfig', resolvedConfig);
+
+  return resolvedConfig;
 }
