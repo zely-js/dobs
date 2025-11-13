@@ -1,5 +1,6 @@
 import { Routes, Handler } from '../types';
-import { mutateObjectValues } from '../shared/object';
+import { mutateObjectKeys, mutateObjectValues } from '../shared/object';
+import { Plugin } from '../plugin';
 
 export interface CacheOptions {
   /**
@@ -108,6 +109,7 @@ function createWrapper(
  *
  * export default defineRoutes((req, res) => {}, [useCache()])
  * ``` 
+ * 
  * The values included in the ID generation are as follows: handler ID (GET, ALL, etc.) and pathname.
  * Values not included are: query, req.body, etc. 
  */
@@ -126,5 +128,42 @@ export function useCache(cacheOptions?: CacheOptions) {
     return mutateObjectValues<string, Handler>(router as any, (value, key) =>
       createWrapper(value, cache, key),
     );
+  };
+}
+
+// internal cache plugin
+// concept: $ALL => ALL (caching enabled)
+
+/**
+ * Plugin that enables data caching
+ */
+export function cachePlugin(cacheOptions?: CacheOptions): Plugin {
+  const cache = new (cacheOptions?.customCache ?? TtlCache)(cacheOptions?.ttl);
+
+  return {
+    name: 'dobs/experimental/cache-plugin',
+
+    generateRoute(router) {
+      const routerType = typeof router === 'function' ? 'function' : 'object';
+
+      if (routerType === 'function') {
+        return router;
+      }
+
+      const wrappedRouter = mutateObjectValues<string, Handler>(
+        router as any,
+        (value, key) => {
+          if (key.startsWith('$')) {
+            return createWrapper(value, cache, key);
+          }
+          return value;
+        },
+      );
+
+      return mutateObjectKeys(wrappedRouter, (key) => {
+        if (key.startsWith('$')) return key.slice(1);
+        return key;
+      });
+    },
   };
 }
