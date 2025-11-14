@@ -3336,6 +3336,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dist-d5bdba@workspace:playgrounds/default/dist":
+  version: 0.0.0-use.local
+  resolution: "dist-d5bdba@workspace:playgrounds/default/dist"
+  languageName: unknown
+  linkType: soft
+
 "dobs@workspace:*, dobs@workspace:packages/dobs":
   version: 0.0.0-use.local
   resolution: "dobs@workspace:packages/dobs"
@@ -3345,7 +3351,7 @@ __metadata:
     chalk: "npm:4"
     chokidar: "npm:^4.0.3"
     deepmerge-ts: "npm:^7.1.5"
-    module-loader-ts: "npm:^0.0.1"
+    module-loader-ts: "npm:^0.0.2"
     rolldown: "npm:^1.0.0-beta.46"
   bin:
     dobs: ./dist/cli.js
@@ -5413,7 +5419,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"module-loader-ts@npm:^0.0.1, module-loader-ts@workspace:packages/module-loader":
+"module-loader-ts@npm:^0.0.2, module-loader-ts@workspace:packages/module-loader":
   version: 0.0.0-use.local
   resolution: "module-loader-ts@workspace:packages/module-loader"
   dependencies:
