@@ -7,6 +7,7 @@ import { compileModule } from 'module-loader-ts';
 import nodeExternal from '~/dobs/server/plugins/external';
 import { buildFiles, createRoutes, findFile } from '~/dobs/server/router';
 import { ResolvedServerConfig } from '~/dobs/config';
+import chalk from 'chalk';
 
 export async function buildServer(config: ResolvedServerConfig) {
   const routesDirectory = join(config.cwd, 'app');
@@ -34,12 +35,13 @@ export async function buildServer(config: ResolvedServerConfig) {
   const builtMap = buildFiles(output, tempDirectory);
 
   const rawRoutes = [];
+  const rawFiles = [];
 
   for (const route of routes) {
     const foundFile = findFile(join(routesDirectory, route.relativePath), builtMap);
-    rawRoutes.push(
-      `${JSON.stringify(route.relativePath)}: require(${JSON.stringify(foundFile).replace(/\\/g, '/')})`,
-    );
+    const str = JSON.stringify(foundFile).replace(/\\/g, '/');
+    rawFiles.push(str.slice(1, -1));
+    rawRoutes.push(`${JSON.stringify(route.relativePath)}: require(${str})`);
   }
 
   const [, configFileTemp] = await compileModule('dobs.config', {
@@ -61,7 +63,7 @@ const _app = _dobs_http();
 
 _app.use(...[..._middlewares, _internal._buildInternalMiddleware({${rawRoutes.join(',\n')}}, _config)]);
 
-_app.listen(process.env.PORT ?? _config.port, () => {console.log("server is running on " + process.env.PORT ?? _config.port)});
+_app.listen(process.env.PORT ?? _config.port, () => {console.log("server is running on " + (process.env.PORT ?? _config.port))});
 `,
   );
 
@@ -70,11 +72,16 @@ _app.listen(process.env.PORT ?? _config.port, () => {console.log("server is runn
     output: {
       format: 'cjs',
       file: outputFile,
+      minify: true,
     },
-    plugins: [nodeExternal({ allow: [formattedConfigFile.slice(1, -1)] })],
+    plugins: [nodeExternal({ allow: [formattedConfigFile.slice(1, -1), ...rawFiles] })],
   });
 
   writeFileSync(outputFilePackageJSON, JSON.stringify({ type: 'commonjs' }));
+
+  console.log(
+    `${chalk.green('compiled')} compiled successfully. - ${chalk.underline(outputFile)} ${chalk.dim('[minified]')}`,
+  );
 
   return outputFile;
 }
