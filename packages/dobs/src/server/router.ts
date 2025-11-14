@@ -106,7 +106,11 @@ export function createInternalRouter(
       cachedModule.set(route.relativePath, preloadedModules.get(route.relativePath));
     } else if (!cachedModule.has(route.relativePath)) {
       const foundFile = findFile(join(routesDirectory, route.relativePath), builtMap);
-      cachedModule.set(route.relativePath, await dynamicImport(foundFile));
+      let mod = await dynamicImport(foundFile);
+
+      mod = await pluginRunner.execute('generateRoute', mod);
+
+      cachedModule.set(route.relativePath, mod);
     }
 
     const pageModule = cachedModule.get(route.relativePath);
@@ -115,7 +119,7 @@ export function createInternalRouter(
 
     try {
       const method = (req.method || '').toLowerCase();
-      const handlers: PageType = await pluginRunner.execute('generateRoute', pageModule);
+      const handlers: PageType = pageModule; // await pluginRunner.execute('generateRoute', pageModule);
 
       const execute = async (handler: HandlerType) => {
         if (typeof handler !== 'function') return res.send(handler);
