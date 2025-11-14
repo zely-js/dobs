@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.2](https://github.com/zely-js/dobs/compare/v0.0.1...v0.0.2) (2025-11-14)
+
+### Bug Fixes
+
+* tsconfig path ([b759630](https://github.com/zely-js/dobs/commit/b759630132803b258560f488c4372e960daf3aa3))
+
 ## [0.0.1](https://github.com/zely-js/dobs/compare/v0.0.1-alpha.8...v0.0.1) (2025-11-09)
 
 **Note:** Version bump only for package module-loader-ts

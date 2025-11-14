@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.2](https://github.com/zely-js/dobs/compare/v0.0.1...v0.0.2) (2025-11-14)
+
+### Bug Fixes
+
+* **builder:** include router files in bundle ([64a8bfd](https://github.com/zely-js/dobs/commit/64a8bfd28ff11d3140a0dc71c3aceb1a4f3af311))
+* tsconfig path ([b759630](https://github.com/zely-js/dobs/commit/b759630132803b258560f488c4372e960daf3aa3))
+* unlink temp files ([748bd64](https://github.com/zely-js/dobs/commit/748bd64d42e775014e23c849cdcc721552196ebf))
+
+### Features
+
+* implement plugin architecture ([#34](https://github.com/zely-js/dobs/issues/34)) ([e06d0fe](https://github.com/zely-js/dobs/commit/e06d0fe012313762938745dca1e47adf2ad78d9c))
+
 ## [0.0.1](https://github.com/zely-js/dobs/compare/v0.0.1-alpha.8...v0.0.1) (2025-11-09)
 
 **Note:** Version bump only for package dobs
