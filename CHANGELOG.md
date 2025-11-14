@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-beta.0](https://github.com/zely-js/dobs/compare/v0.0.2...v0.1.0-beta.0) (2025-11-14)
+
+### Bug Fixes
+
+* check files existence before build ([097c322](https://github.com/zely-js/dobs/commit/097c322ea12a8e9aff0e802d8961988453eb9373))
+
 ## [0.0.2](https://github.com/zely-js/dobs/compare/v0.0.1...v0.0.2) (2025-11-14)
 
 ### Bug Fixes
