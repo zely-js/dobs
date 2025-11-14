@@ -22,6 +22,6 @@
     }
   },
   "dependencies": {
-    "rolldown": "^1.0.0-beta.46"
+    "rolldown": "1.0.0-beta.50"
   }
 }

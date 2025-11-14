@@ -129,9 +129,7 @@ export async function compileModule(
       esModule: true,
     },
 
-    resolve: {
-      tsconfigFilename: existsSync(tsconfig) ? tsconfig : undefined,
-    },
+    tsconfig: existsSync(tsconfig) ? tsconfig : undefined,
 
     platform: 'node',
     logLevel: 'silent',
