@@ -1,4 +1,4 @@
-import { writeFileSync } from 'node:fs';
+import { unlinkSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { build, BuildOptions } from 'rolldown';
@@ -78,6 +78,7 @@ _app.listen(process.env.PORT ?? _config.port, () => {console.log("server is runn
   });
 
   writeFileSync(outputFilePackageJSON, JSON.stringify({ type: 'commonjs' }));
+  unlinkSync(configFileTemp);
 
   console.log(
     `${chalk.green('compiled')} compiled successfully. - ${chalk.underline(outputFile)} ${chalk.dim('[minified]')}`,
