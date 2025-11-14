@@ -78,7 +78,7 @@ _app.listen(process.env.PORT ?? _config.port, () => {console.log("server is runn
   });
 
   writeFileSync(outputFilePackageJSON, JSON.stringify({ type: 'commonjs' }));
-  unlinkSync(configFileTemp);
+  if (configFileTemp) unlinkSync(configFileTemp);
 
   console.log(
     `${chalk.green('compiled')} compiled successfully. - ${chalk.underline(outputFile)} ${chalk.dim('[minified]')}`,
