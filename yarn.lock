@@ -3336,12 +3336,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dist-d5bdba@workspace:playgrounds/default/dist":
-  version: 0.0.0-use.local
-  resolution: "dist-d5bdba@workspace:playgrounds/default/dist"
-  languageName: unknown
-  linkType: soft
-
 "dobs@workspace:*, dobs@workspace:packages/dobs":
   version: 0.0.0-use.local
   resolution: "dobs@workspace:packages/dobs"
