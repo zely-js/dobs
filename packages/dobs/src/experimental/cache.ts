@@ -1,6 +1,6 @@
-import { Routes, Handler } from '../types';
-import { mutateObjectKeys, mutateObjectValues } from '../shared/object';
-import { Plugin } from '../plugin';
+import { Routes, Handler } from '~/dobs/types';
+import { mutateObjectKeys, mutateObjectValues } from '~/dobs/shared/object';
+import { Plugin } from '~/dobs/plugin';
 
 export interface CacheOptions {
   /**

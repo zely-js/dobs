@@ -1,16 +1,15 @@
 #!/usr/bin/env node
+import { join } from 'node:path';
 
 import animaux from 'animaux';
 import { load } from 'module-loader-ts';
-
 import chalk from 'chalk';
 
 import { createDobsServer } from '~/dobs/server';
 
-import { version } from '../package.json';
 import { resolveConfig, ServerConfig } from './config';
-import { join } from 'node:path';
 import { buildServer } from './builder';
+import { version } from '../package.json';
 
 const app = animaux({ name: 'dobs', version: version });
 

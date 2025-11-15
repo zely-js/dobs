@@ -2,12 +2,12 @@ import { unlinkSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { build, BuildOptions } from 'rolldown';
+import chalk from 'chalk';
 import { compileModule } from 'module-loader-ts';
 
 import nodeExternal from '~/dobs/server/plugins/external';
 import { buildFiles, createRoutes, findFile } from '~/dobs/server/router';
 import { ResolvedServerConfig } from '~/dobs/config';
-import chalk from 'chalk';
 
 export async function buildServer(config: ResolvedServerConfig) {
   const routesDirectory = join(config.cwd, 'app');

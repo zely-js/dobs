@@ -1,8 +1,10 @@
 import { Server } from 'node:http';
 import httpServer, { Middleware } from '@dobsjs/http';
+
 import { resolveConfig, ServerConfig } from '~/dobs/config';
+import { createPluginRunner } from '~/dobs/plugin';
+
 import { createRouterMiddleware } from './router';
-import { createPluginRunner } from '../plugin';
 
 type CreateServerReturn<T extends ServerConfig> = T['mode'] extends 'middleware'
   ? Middleware[]

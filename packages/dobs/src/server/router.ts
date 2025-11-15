@@ -1,3 +1,4 @@
+import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative } from 'node:path';
 
 import type { AppRequest, AppResponse, Middleware } from '@dobsjs/http';
@@ -10,11 +11,10 @@ import { scanDirectory } from '~/dobs/shared/fs';
 import { convertPathToRegex, matchUrlToRoute } from '~/dobs/shared/urlPath';
 import { isSamePath } from '~/dobs/shared/path';
 import { lowercaseKeyObject } from '~/dobs/shared/object';
+import { createPluginRunner } from '~/dobs/plugin';
 
-import { dynamicImport } from './load';
 import nodeExternal from './plugins/external';
-import { mkdirSync, writeFileSync } from 'node:fs';
-import { createPluginRunner } from '../plugin';
+import { dynamicImport } from './load';
 
 type HandlerType = ((req: AppRequest, res: AppResponse) => any) | Record<string, any>;
 
