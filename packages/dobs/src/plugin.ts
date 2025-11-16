@@ -1,4 +1,5 @@
 import type { BuildOptions } from 'rolldown';
+import type { BaseServer } from '@dobsjs/http';
 
 import type { ResolvedServerConfig, ServerConfig } from './config';
 import type { Promisable, Maybe } from './_types';
@@ -18,6 +19,8 @@ export interface Plugin {
    * https://rolldown.rs/options/input
    */
   resolveBuildOptions?(buildOptions: BuildOptions): Maybe<BuildOptions>;
+
+  server?(server: BaseServer): Promisable<Maybe<BaseServer>>;
 
   generateRoute?(route: Routes): Promisable<Maybe<Routes>>;
 }
