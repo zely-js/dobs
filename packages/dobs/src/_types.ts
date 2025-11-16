@@ -6,4 +6,4 @@ export type LooseObject<KnownKeys extends string, ValueType> = Partial<
 export type LooseKey<K extends string> = K | (string & {});
 
 export type Promisable<T> = T | Promise<T>;
-export type Maybe<T> = T | null | undefined;
+export type Maybe<T> = T | null | undefined | void;
