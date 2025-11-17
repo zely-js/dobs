@@ -22,6 +22,9 @@ export async function createDobsServer<T extends ServerConfig>(
   const resolvedConfig = resolveConfig(config);
   const server = httpServer(resolvedConfig.createServer);
 
+  // [plugin] execute plugin.server
+  await runner.execute('server', server);
+
   // user middleware
   server.middlewares.push(...resolvedConfig.middlewares);
   // router middleware
