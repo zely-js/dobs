@@ -4,8 +4,7 @@ import type { BaseServer } from '@dobsjs/http';
 import type { ResolvedServerConfig, ServerConfig } from './config';
 import type { Promisable, Maybe } from './_types';
 import type { Routes } from './types';
-
-import { errorTracker } from '~/dobs/server/plugins/builtin-tracker';
+import { errorTracker } from './server/plugins/builtin-tracker';
 
 export interface ErrorContext {
   error: Error;
