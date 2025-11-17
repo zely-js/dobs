@@ -1,8 +1,15 @@
 import type { BuildOptions } from 'rolldown';
+import type { BaseServer } from '@dobsjs/http';
 
 import type { ResolvedServerConfig, ServerConfig } from './config';
 import type { Promisable, Maybe } from './_types';
 import type { Routes } from './types';
+
+import { errorTracker } from '~/dobs/server/plugins/builtin-tracker';
+
+export interface ErrorContext {
+  error: Error;
+}
 
 export interface Plugin {
   name: string;
@@ -19,7 +26,11 @@ export interface Plugin {
    */
   resolveBuildOptions?(buildOptions: BuildOptions): Maybe<BuildOptions>;
 
-  generateRoute?(route: Routes): Promisable<Maybe<Routes>>;
+  server?(server: BaseServer): Promisable<Maybe<BaseServer>>;
+
+  generateRoute?(route: Routes): Promisable<Routes>;
+
+  handleError?(error: ErrorContext): Promisable<void>;
 }
 
 type FunctionKeys<T> = {
@@ -27,6 +38,9 @@ type FunctionKeys<T> = {
 }[keyof T];
 
 export function createPluginRunner(plugins: Plugin[]) {
+  const builtin_plugins = [errorTracker()];
+  plugins = plugins.concat(builtin_plugins);
+
   return {
     plugins,
 
@@ -46,9 +60,7 @@ export function createPluginRunner(plugins: Plugin[]) {
             result = returned;
           }
         } catch (e) {
-          throw new Error(
-            `[${plugin.name}] error has occurred during executing ${plugin.name}.${key} - ${e.message}`,
-          );
+          throw new Error(`[${plugin.name}] ${e.message}`);
         }
       }
 

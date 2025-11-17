@@ -2,7 +2,7 @@ import { existsSync, mkdirSync, unlinkSync, writeFileSync } from 'node:fs';
 import { dirname, join, parse } from 'node:path';
 import { build, BuildOptions } from 'rolldown';
 import { dynamicImport } from '~/dobs/server/load';
-import nodeExternal from '~/dobs/server/plugins/external';
+import nodeExternal from '~/dobs/server/plugins/rolldown/external';
 
 const MODULE_TYPE = {
   TYPESCRIPT: ['.ts', '.mts', '.cts', '.tsx'],

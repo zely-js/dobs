@@ -5,7 +5,7 @@ import { build, BuildOptions } from 'rolldown';
 import chalk from 'chalk';
 import { compileModule } from 'module-loader-ts';
 
-import nodeExternal from '~/dobs/server/plugins/external';
+import nodeExternal from '~/dobs/server/plugins/rolldown/external';
 import { buildFiles, createRoutes, findFile } from '~/dobs/server/router';
 import { ResolvedServerConfig } from '~/dobs/config';
 

@@ -13,7 +13,7 @@ import { isSamePath } from '~/dobs/shared/path';
 import { lowercaseKeyObject } from '~/dobs/shared/object';
 import { createPluginRunner } from '~/dobs/plugin';
 
-import nodeExternal from './plugins/external';
+import nodeExternal from './plugins/rolldown/external';
 import { dynamicImport } from './load';
 
 type HandlerType = ((req: AppRequest, res: AppResponse) => any) | Record<string, any>;
@@ -138,7 +138,7 @@ export function createInternalRouter(
       if (handlerObject.all) await execute(handlerObject.all);
       if (handlerObject[method]) await execute(handlerObject[method]);
     } catch (e) {
-      console.error(e);
+      await pluginRunner.execute('handleError', { error: e });
     }
   };
 }
