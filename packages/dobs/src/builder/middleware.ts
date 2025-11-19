@@ -3,6 +3,7 @@ import { Middleware } from '@dobsjs/http';
 import { createInternalRouter } from '~/dobs/server/router';
 import { convertPathToRegex } from '~/dobs/shared/urlPath';
 import { ResolvedServerConfig } from '~/dobs/config';
+import { createPluginRunner } from '../plugin';
 
 interface Route {
   regex: RegExp;
@@ -10,21 +11,26 @@ interface Route {
   relativePath: string;
 }
 
-export function _buildInternalMiddleware(
+export async function _buildInternalMiddleware(
   routes: Record<string, any>,
   cfg: ResolvedServerConfig,
-): Middleware {
+): Promise<Middleware> {
   const builtRoutes: Route[] = Object.keys(routes).map((file) => {
     const normalized = file.replace(/\\/g, '/').replace(/^\/?/, '');
     return { ...convertPathToRegex(normalized), relativePath: normalized };
   });
+  const runner = createPluginRunner(cfg.plugins);
 
   const builtMap = new Map<string, string>();
   const preloadedModules = new Map<string, any>(
-    Object.entries(routes).map(([k, v]) => [
-      k.replace(/\\/g, '/').replace(/^\/?/, ''),
-      v,
-    ]),
+    await Promise.all(
+      Object.entries(routes).map(async ([k, v]) => {
+        return [
+          k.replace(/\\/g, '/').replace(/^\/?/, ''),
+          await runner.execute('generateRoute', v),
+        ] as const;
+      }),
+    ),
   );
 
   return createInternalRouter(cfg, builtRoutes, builtMap, preloadedModules);

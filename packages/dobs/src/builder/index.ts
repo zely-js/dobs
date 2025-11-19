@@ -66,11 +66,13 @@ const _middlewares = _config?.middlewares;
 
 const _app = _dobs_http();
 
-_server_entry(_app);
+(async function() {
+  _server_entry(_app);
 
-_app.use(...[..._middlewares, _internal._buildInternalMiddleware({${rawRoutes.join(',\n')}}, _config)]);
+  _app.use(...[..._middlewares, await _internal._buildInternalMiddleware({${rawRoutes.join(',\n')}}, _config)]);
 
-_app.listen(process.env.PORT ?? _config.port, () => {console.log("server is running on " + (process.env.PORT ?? _config.port))});
+  _app.listen(process.env.PORT ?? _config.port, () => {console.log("server is running on " + (process.env.PORT ?? _config.port))});
+})();
 `,
   );
 
