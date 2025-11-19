@@ -47,7 +47,11 @@ export async function buildServer(config: ResolvedServerConfig) {
   const [, configFileTemp] = await compileModule('dobs.config', {
     extensions: ['.js', '.mjs', '.cjs', '.ts', '.mts', '.cts'],
   });
+  const [, serverEntryTemp] = await compileModule(config.serverEntry, {
+    extensions: ['', '.js', '.mjs', '.cjs', '.ts', '.mts', '.cts'],
+  });
   const formattedConfigFile = JSON.stringify(configFileTemp).replace(/\\/g, '/');
+  const formattedServerEntry = JSON.stringify(serverEntryTemp).replace(/\\/g, '/');
 
   writeFileSync(
     join(tempDirectory, '_temp.js'),
@@ -57,9 +61,12 @@ const _internal = require("dobs/_build");
 const _dobs_http = _internal.createHTTPServer;
 
 const _config = _dobs.resolveConfig(${configFileTemp ? `require(${formattedConfigFile})` : '{}'} ?? {});
+const _server_entry = (${serverEntryTemp ? `require(${formattedServerEntry})` : '(() => {})'} ?? (() => {}));
 const _middlewares = _config?.middlewares;
 
 const _app = _dobs_http();
+
+_server_entry(_app);
 
 _app.use(...[..._middlewares, _internal._buildInternalMiddleware({${rawRoutes.join(',\n')}}, _config)]);
 
@@ -74,7 +81,15 @@ _app.listen(process.env.PORT ?? _config.port, () => {console.log("server is runn
       file: outputFile,
       minify: true,
     },
-    plugins: [nodeExternal({ allow: [formattedConfigFile.slice(1, -1), ...rawFiles] })],
+    plugins: [
+      nodeExternal({
+        allow: [
+          formattedConfigFile.slice(1, -1),
+          formattedServerEntry.slice(1, -1),
+          ...rawFiles,
+        ],
+      }),
+    ],
   });
 
   writeFileSync(outputFilePackageJSON, JSON.stringify({ type: 'commonjs' }));
