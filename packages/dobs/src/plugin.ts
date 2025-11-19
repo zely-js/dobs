@@ -25,6 +25,7 @@ export interface Plugin {
    */
   resolveBuildOptions?(buildOptions: BuildOptions): Maybe<BuildOptions>;
 
+  /** only available in development mode. (use `serverEntry` for prod/dev mode) */
   server?(server: BaseServer): Promisable<Maybe<BaseServer>>;
 
   generateRoute?(route: Routes): Promisable<Routes>;

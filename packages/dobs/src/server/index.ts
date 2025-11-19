@@ -17,9 +17,6 @@ export async function createDobsServer<T extends ServerConfig>(
   const plugins = config?.plugins || [];
   const runner = createPluginRunner(plugins);
 
-  // [plugin] execute plugin.config
-  await runner.execute('config', config);
-
   const resolvedConfig = resolveConfig(config);
   const server = httpServer(resolvedConfig.createServer);
   const serverEntry = await loadServerEntry(resolvedConfig);
