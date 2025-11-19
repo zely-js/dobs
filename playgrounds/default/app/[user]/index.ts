@@ -1,4 +1,4 @@
-import { defineRoutes } from 'dobs';
+import { defineRouter } from 'dobs';
 
 interface User {
   nickname: string;
@@ -16,7 +16,7 @@ const USER_FAKE_DATA: Record<string, User> = {
   },
 };
 
-export default defineRoutes({
+export default defineRouter({
   GET(req, res) {
     const { user } = req.params;
     const user_data = USER_FAKE_DATA[user];

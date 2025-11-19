@@ -41,9 +41,9 @@ project/
 ### Example
 
 ```ts
-import { defineRoutes } from 'dobs';
+import { defineRouter } from 'dobs';
 
-export default defineRoutes((req, res) => {
+export default defineRouter((req, res) => {
   res.send('Hello from Dobs!');
 });
 ```
@@ -53,9 +53,9 @@ This route responds with `"Hello from Dobs!"` for all HTTP methods.
 If you want to handle methods separately:
 
 ```ts
-import { defineRoutes } from 'dobs';
+import { defineRouter } from 'dobs';
 
-export default defineRoutes({
+export default defineRouter({
   GET(req, res) {
     res.send({ message: 'This is GET' });
   },

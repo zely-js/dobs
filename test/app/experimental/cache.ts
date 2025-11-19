@@ -1,7 +1,7 @@
-import { defineRoutes } from 'dobs';
+import { defineRouter } from 'dobs';
 import { useCache } from 'dobs/experimental';
 
-export default defineRoutes(
+export default defineRouter(
   (req, res) => {
     setInterval(() => {
       res.send('hello');

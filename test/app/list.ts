@@ -1,6 +1,6 @@
-import { defineRoutes } from 'dobs';
+import { defineRouter } from 'dobs';
 
-export default defineRoutes({
+export default defineRouter({
   GET(req, res) {
     res.send([1, 2, 3, 4, 5]);
   },

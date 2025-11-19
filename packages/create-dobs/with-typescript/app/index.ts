@@ -1,5 +1,5 @@
-import { defineRoutes } from 'dobs';
+import { defineRouter } from 'dobs';
 
-export default defineRoutes({
+export default defineRouter({
   ALL: { message: 'Server is alive!' },
 });

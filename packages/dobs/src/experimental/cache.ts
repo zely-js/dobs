@@ -104,10 +104,10 @@ function createWrapper(
  *
  * @example
  * ```ts
- * import { defineRoutes } from "dobs";
+ * import { defineRouter } from "dobs";
  * import { useCache } from "dobs/experimental";
  *
- * export default defineRoutes((req, res) => {}, [useCache()])
+ * export default defineRouter((req, res) => {}, [useCache()])
  * ``` 
  * 
  * The values included in the ID generation are as follows: handler ID (GET, ALL, etc.) and pathname.
