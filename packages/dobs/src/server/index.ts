@@ -5,6 +5,7 @@ import { resolveConfig, ServerConfig } from '~/dobs/config';
 import { createPluginRunner } from '~/dobs/plugin';
 
 import { createRouterMiddleware } from './router';
+import { loadServerEntry } from './server-entry';
 
 type CreateServerReturn<T extends ServerConfig> = T['mode'] extends 'middleware'
   ? Middleware[]
@@ -21,10 +22,13 @@ export async function createDobsServer<T extends ServerConfig>(
 
   const resolvedConfig = resolveConfig(config);
   const server = httpServer(resolvedConfig.createServer);
+  const serverEntry = await loadServerEntry(resolvedConfig);
 
   // [plugin] execute plugin.server
   await runner.execute('server', server);
 
+  // user server entry
+  if (serverEntry) serverEntry(server);
   // user middleware
   server.middlewares.push(...resolvedConfig.middlewares);
   // router middleware
