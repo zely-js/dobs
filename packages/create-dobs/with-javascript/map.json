@@ -1,1 +1,1 @@
-{ "map": ["app/index.js", "app/[user]/index.js", "dobs.config.js"] }
+{ "map": ["app/index.js", "app/[user]/index.js", "dobs.config.js", "server.entry.js"] }

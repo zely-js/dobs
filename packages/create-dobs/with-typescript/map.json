@@ -1,1 +1,1 @@
-{ "map": ["app/index.ts", "app/[user]/index.ts", "dobs.config.ts"] }
+{ "map": ["app/index.ts", "app/[user]/index.ts", "dobs.config.ts", "server.entry.ts"] }

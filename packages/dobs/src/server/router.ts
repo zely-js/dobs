@@ -117,8 +117,6 @@ export function createInternalRouter(
     const params = matchUrlToRoute(url, route);
     req.params = params;
 
-    console.log(pageModule);
-
     try {
       const method = (req.method || '').toLowerCase();
       const handlers: PageType = pageModule; // await pluginRunner.execute('generateRoute', pageModule);
