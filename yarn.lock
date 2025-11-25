@@ -113,6 +113,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@dobsjs/websocket@workspace:*, @dobsjs/websocket@workspace:packages/dobs-ws":
+  version: 0.0.0-use.local
+  resolution: "@dobsjs/websocket@workspace:packages/dobs-ws"
+  dependencies:
+    "@types/ws": "npm:^8"
+    ws: "npm:^8.18.3"
+  languageName: unknown
+  linkType: soft
+
 "@emnapi/core@npm:^1.4.3, @emnapi/core@npm:^1.5.0":
   version: 1.7.0
   resolution: "@emnapi/core@npm:1.7.0"
@@ -1535,6 +1544,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@playgrounds/default@workspace:playgrounds/default"
   dependencies:
+    "@dobsjs/websocket": "workspace:*"
     dobs: "workspace:*"
   languageName: unknown
   linkType: soft
@@ -2325,6 +2335,15 @@ __metadata:
   version: 7.0.3
   resolution: "@types/parse-path@npm:7.0.3"
   checksum: 10c0/8344b6c7acba4e4e5a8d542f56f53c297685fa92f9b0c085d7532cc7e1b661432cecfc1c75c76cdb0d161c95679b6ecfe0573d9fef7c836962aacf604150a984
+  languageName: node
+  linkType: hard
+
+"@types/ws@npm:^8":
+  version: 8.18.1
+  resolution: "@types/ws@npm:8.18.1"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 10c0/61aff1129143fcc4312f083bc9e9e168aa3026b7dd6e70796276dcfb2c8211c4292603f9c4864fae702f2ed86e4abd4d38aa421831c2fd7f856c931a481afbab
   languageName: node
   linkType: hard
 
@@ -8056,6 +8075,21 @@ __metadata:
     type-fest: "npm:^4.23.0"
     write-json-file: "npm:^6.0.0"
   checksum: 10c0/81400aec443c4621723e3536e0bb21c2cf90697f79c5641093a2723dfaf9b3fd7773f1a785f56720b8170dc27f0545957e23ca0392abf1e4fd67cc1ccf688056
+  languageName: node
+  linkType: hard
+
+"ws@npm:^8.18.3":
+  version: 8.18.3
+  resolution: "ws@npm:8.18.3"
+  peerDependencies:
+    bufferutil: ^4.0.1
+    utf-8-validate: ">=5.0.2"
+  peerDependenciesMeta:
+    bufferutil:
+      optional: true
+    utf-8-validate:
+      optional: true
+  checksum: 10c0/eac918213de265ef7cb3d4ca348b891a51a520d839aa51cdb8ca93d4fa7ff9f6ccb339ccee89e4075324097f0a55157c89fa3f7147bde9d8d7e90335dc087b53
   languageName: node
   linkType: hard
 
