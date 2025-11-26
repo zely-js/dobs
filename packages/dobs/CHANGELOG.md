@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-beta.3](https://github.com/zely-js/dobs/compare/v0.1.0-beta.2...v0.1.0-beta.3) (2025-11-26)
+
+### Features
+
+* **@dobsjs/websocket:** websocket client ([2096416](https://github.com/zely-js/dobs/commit/20964161078ac0716ce851d3bcb44faafa61622d))
+* **create-dobs:** include server entry in template ([ea7c21b](https://github.com/zely-js/dobs/commit/ea7c21b4b18f62118edaa2bd9e0d7e799fd27b0a))
+
 # [0.1.0-beta.2](https://github.com/zely-js/dobs/compare/v0.1.0-beta.1...v0.1.0-beta.2) (2025-11-19)
 
 ### Bug Fixes
