@@ -7,7 +7,7 @@ export default {
   plugins: [
     cachePlugin({ ttl: 1000 }),
     websocket({
-      open(ws) {
+      open() {
         console.log('[ws] connected');
       },
       message(ws, message) {
