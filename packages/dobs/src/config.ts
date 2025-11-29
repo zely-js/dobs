@@ -34,6 +34,9 @@ export interface ResolvedServerConfig {
   plugins: Plugin[];
 
   serverEntry: string;
+
+  /** enable devtool. (@dobsjs/dev package must have been installed.) */
+  devtool: boolean;
 }
 
 export type ServerConfig = Partial<ResolvedServerConfig>;
@@ -50,6 +53,7 @@ export const DEFAULT_CONFIG: ResolvedServerConfig = {
   },
   plugins: [],
   serverEntry: 'server.entry',
+  devtool: false,
 };
 
 export function resolveConfig(config: ServerConfig): ResolvedServerConfig {

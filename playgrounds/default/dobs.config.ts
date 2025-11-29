@@ -3,7 +3,8 @@ import { websocket } from '@dobsjs/websocket';
 import { cachePlugin } from 'dobs/experimental';
 
 export default {
-  port: 3000,
+  port: 3001,
+  devtool: true,
   plugins: [
     cachePlugin({ ttl: 1000 }),
     websocket({

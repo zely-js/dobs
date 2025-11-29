@@ -46,8 +46,15 @@ app
       console.log(
         chalk.white(
           `\n${chalk.dim('$')} Server is running on ${chalk.cyan(chalk.underline(chalk.bold(`http://localhost:${port}`)))}`,
-        ) + chalk.dim(` (Ready in ${(performance.now() - startTime).toFixed(2)}ms)\n`),
+        ) + chalk.dim(` (Ready in ${(performance.now() - startTime).toFixed(2)}ms)`),
       );
+
+      if (config?.devtool) {
+        console.log(
+          chalk.dim(`  - devtool : ${chalk.cyan(`http://localhost:${port}/_dev_`)}`),
+        );
+      }
+      console.log();
     });
   });
 

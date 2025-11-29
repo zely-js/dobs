@@ -2,6 +2,7 @@
   "extends": "./tsconfig.base.json",
   "include": [
     "packages/**/*.ts",
+    "packages/**/*.tsx",
     "packages/**/*.d.ts",
     "packages/**/*.test.ts",
     "packages/**/*.test.tsx",
@@ -12,7 +13,7 @@
   "compilerOptions": {
     "rootDir": ".",
     "paths": {
-      "~/dobs/*": ["./packages/dobs/src/*"],
+      "~/dobs/*": ["./packages/dobs/src/*"]
     }
   }
 }

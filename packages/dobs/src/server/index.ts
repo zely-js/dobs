@@ -6,6 +6,7 @@ import { createPluginRunner } from '~/dobs/plugin';
 
 import { createRouterMiddleware } from './router';
 import { loadServerEntry } from './server-entry';
+import { devtool } from './plugins/devtool';
 
 type CreateServerReturn<T extends ServerConfig> = T['mode'] extends 'middleware'
   ? Middleware[]
@@ -15,6 +16,12 @@ export async function createDobsServer<T extends ServerConfig>(
   config?: T,
 ): Promise<CreateServerReturn<T>> {
   const plugins = config?.plugins || [];
+
+  // optional plugins
+  if (config?.devtool) {
+    plugins.push(devtool());
+  }
+
   const runner = createPluginRunner(plugins);
 
   const resolvedConfig = resolveConfig(config);
