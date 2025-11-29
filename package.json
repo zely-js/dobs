@@ -16,6 +16,8 @@
     "@types/encodeurl": "^1.0.3",
     "@types/mime-types": "^3.0.1",
     "@types/node": "^24.10.0",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
     "cross-spawn": "^7.0.6",
     "eslint": "^9.39.0",
     "eslint-config-prettier": "^10.1.8",
@@ -38,6 +40,9 @@
     "lint-fix": "eslint --fix --ext .js,.ts .",
     "test": "vitest run",
     "build": "tsdown",
+    "build:ui": "yarn workspace @dobsjs/dev vite build",
+    "dev": "tsdown --watch",
+    "dev:ui": "yarn workspace @dobsjs/dev vite dev",
     "run-script": "node -r @swc-node/register",
     "publish": "lerna version && yarn build && lerna publish from-package"
   },
