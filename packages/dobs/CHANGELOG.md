@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0](https://github.com/zely-js/dobs/compare/v0.1.0-beta.3...v0.1.0) (2025-11-30)
+
+### Features
+
+* **@dobsjs/dev:** devtool ([#52](https://github.com/zely-js/dobs/issues/52)) ([acb67ea](https://github.com/zely-js/dobs/commit/acb67eaac20aa449edb72e90b3a1c330d25f3462))
+* plugin apply mode and runner filtering ([7ea4f1e](https://github.com/zely-js/dobs/commit/7ea4f1e974cfebb805b4cb5a0878607b1a598da5))
+
 # [0.1.0-beta.3](https://github.com/zely-js/dobs/compare/v0.1.0-beta.2...v0.1.0-beta.3) (2025-11-26)
 
 ### Features
