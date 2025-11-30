@@ -13,6 +13,9 @@ export interface ErrorContext {
 export interface Plugin {
   name: string;
 
+  /** when plugin should be applied (default: all) */
+  apply?: 'development' | 'production' | 'all';
+
   /** modify server config */
   config?(config: ServerConfig): Maybe<ServerConfig>;
 
@@ -37,12 +40,28 @@ type FunctionKeys<T> = {
   [K in keyof T]: T[K] extends (...args: any[]) => any ? K : never;
 }[keyof T];
 
-export function createPluginRunner(plugins: Plugin[]) {
+function canApply(plugin: Plugin, mode: 'development' | 'production'): boolean {
+  const apply = plugin.apply ?? 'all';
+  return (
+    apply === 'all' ||
+    (apply === 'development' && mode === 'development') ||
+    (apply === 'production' && mode === 'production')
+  );
+}
+
+export function createPluginRunner(
+  plugins: Plugin[],
+  mode?: 'development' | 'production',
+) {
+  if (!mode) mode = process.env.NODE_ENV === 'development' ? 'development' : 'production';
+
   const builtin_plugins = [errorTracker()];
+
   plugins = plugins.concat(builtin_plugins);
 
   return {
     plugins,
+    mode,
 
     async execute<K extends FunctionKeys<Plugin>>(
       key: K,
@@ -51,6 +70,8 @@ export function createPluginRunner(plugins: Plugin[]) {
       let result: any = args[0];
 
       for (const plugin of plugins) {
+        if (!canApply(plugin, mode)) continue;
+
         const fn = plugin[key];
         if (typeof fn !== 'function') continue;
 
@@ -59,7 +80,7 @@ export function createPluginRunner(plugins: Plugin[]) {
           if (returned !== undefined && returned !== null) {
             result = returned;
           }
-        } catch (e) {
+        } catch (e: any) {
           throw new Error(`[${plugin.name}] ${e.message}`);
         }
       }

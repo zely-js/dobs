@@ -1,10 +1,13 @@
 import { readFileSync } from 'node:fs';
-import type { ResolvedServerConfig, Plugin } from 'dobs';
+import type { Plugin } from '~/dobs/plugin';
+import type { ResolvedServerConfig } from '~/dobs/config';
 
 export function devtool(): Plugin {
   let config: ResolvedServerConfig;
   return {
     name: 'dobs/devtool',
+
+    apply: 'development',
 
     resolvedConfig(_config) {
       config = _config;
