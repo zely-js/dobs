@@ -7,6 +7,7 @@
     "build": "dobs build"
   },
   "devDependencies": {
+    "@dobsjs/dev": "latest",
     "dobs": "latest"
   }
 }
