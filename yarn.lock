@@ -271,6 +271,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@dobsjs/logger@workspace:*, @dobsjs/logger@workspace:packages/logger":
+  version: 0.0.0-use.local
+  resolution: "@dobsjs/logger@workspace:packages/logger"
+  languageName: unknown
+  linkType: soft
+
 "@dobsjs/websocket@workspace:*, @dobsjs/websocket@workspace:packages/dobs-ws":
   version: 0.0.0-use.local
   resolution: "@dobsjs/websocket@workspace:packages/dobs-ws"
@@ -1857,6 +1863,7 @@ __metadata:
   resolution: "@playgrounds/default@workspace:playgrounds/default"
   dependencies:
     "@dobsjs/dev": "workspace:*"
+    "@dobsjs/logger": "workspace:*"
     "@dobsjs/websocket": "workspace:*"
     dobs: "workspace:*"
   languageName: unknown

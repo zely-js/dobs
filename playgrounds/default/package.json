@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@dobsjs/dev": "workspace:*",
+    "@dobsjs/logger": "workspace:*",
     "@dobsjs/websocket": "workspace:*",
     "dobs": "workspace:*"
   },
