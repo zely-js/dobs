@@ -9,7 +9,6 @@ export function devtool(): Plugin {
     apply: 'development',
 
     resolvedConfig(_config) {
-      console.log(_config);
       config = _config;
     },
 
