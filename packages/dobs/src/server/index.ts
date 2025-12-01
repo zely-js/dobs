@@ -15,14 +15,15 @@ type CreateServerReturn<T extends ServerConfig> = T['mode'] extends 'middleware'
 export async function createDobsServer<T extends ServerConfig>(
   config?: T,
 ): Promise<CreateServerReturn<T>> {
-  const plugins = config?.plugins || [];
+  config ??= {} as any;
+  config.plugins ??= [];
 
   // optional plugins
   if (config?.devtool) {
-    plugins.push(devtool());
+    config.plugins.push(devtool());
   }
 
-  const runner = createPluginRunner(plugins);
+  const runner = createPluginRunner(config.plugins);
 
   const resolvedConfig = resolveConfig(config);
   const server = httpServer(resolvedConfig.createServer);

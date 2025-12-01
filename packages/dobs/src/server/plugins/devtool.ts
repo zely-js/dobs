@@ -6,10 +6,10 @@ export function devtool(): Plugin {
   let config: ResolvedServerConfig;
   return {
     name: 'dobs/devtool',
-
     apply: 'development',
 
     resolvedConfig(_config) {
+      console.log(_config);
       config = _config;
     },
 
