@@ -39,6 +39,9 @@ export async function createDobsServer<T extends ServerConfig>(
   // router middleware
   server.middlewares.push(await createRouterMiddleware(resolvedConfig));
 
+  // 404 handler
+  server.middlewares.push(resolvedConfig.onNotFound);
+
   // return middleware
   if (resolvedConfig.mode === 'middleware')
     return server.middlewares as unknown as CreateServerReturn<T>;

@@ -37,6 +37,8 @@ export interface ResolvedServerConfig {
 
   /** enable devtool. (@dobsjs/dev package must have been installed.) */
   devtool: boolean;
+
+  onNotFound: Middleware;
 }
 
 export type ServerConfig = Partial<ResolvedServerConfig>;
@@ -54,6 +56,10 @@ export const DEFAULT_CONFIG: ResolvedServerConfig = {
   plugins: [],
   serverEntry: 'server.entry',
   devtool: false,
+  onNotFound: (req, res, next) => {
+    res.status(404).end();
+    next();
+  },
 };
 
 export function resolveConfig(config: ServerConfig): ResolvedServerConfig {
