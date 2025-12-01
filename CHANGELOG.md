@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.2](https://github.com/zely-js/dobs/compare/v0.1.1...v0.1.2) (2025-12-01)
+
+### Features
+
+* **core:** 404 handler ([74021cb](https://github.com/zely-js/dobs/commit/74021cbde367d83d64c933f09a608390054b005a))
+* **logger:** logger plugin ([80f84b8](https://github.com/zely-js/dobs/commit/80f84b81b6d18b04b8803ff5ed6f4ef610041739))
+
 ## [0.1.1](https://github.com/zely-js/dobs/compare/v0.1.0...v0.1.1) (2025-12-01)
 
 ### Bug Fixes
