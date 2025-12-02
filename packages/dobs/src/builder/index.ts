@@ -60,15 +60,20 @@ const _dobs = require("dobs");
 const _internal = require("dobs/_build");
 const _dobs_http = _internal.createHTTPServer;
 
+_internal.init();
+
 const _config = _dobs.resolveConfig(${configFileTemp ? `require(${formattedConfigFile})` : '{}'} ?? {});
 const _server_entry = (${serverEntryTemp ? `require(${formattedServerEntry})` : '(() => {})'} ?? (() => {}));
 const _middlewares = _config?.middlewares;
+const _plugin_runner = _internal.createPluginRunner(_config.plugins);
 
 const _app = _dobs_http();
 
 (async function() {
-  _server_entry(_app);
+  _plugin_runner.execute("server", _app); // run plugin
+  _server_entry(_app); // run server entry
 
+  // apply middlewares (1: user middleware, 2: core middleware)
   _app.use(...[..._middlewares, await _internal._buildInternalMiddleware({${rawRoutes.join(',\n')}}, _config)]);
 
   _app.listen(process.env.PORT ?? _config.port, () => {console.log("server is running on " + (process.env.PORT ?? _config.port))});
