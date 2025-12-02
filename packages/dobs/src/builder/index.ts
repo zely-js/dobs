@@ -9,7 +9,10 @@ import nodeExternal from '~/dobs/server/plugins/rolldown/external';
 import { buildFiles, createRoutes, findFile } from '~/dobs/server/router';
 import { ResolvedServerConfig } from '~/dobs/config';
 
-export async function buildServer(config: ResolvedServerConfig) {
+export async function buildServer(
+  config: ResolvedServerConfig,
+  mode: 'export' | 'server' = 'server',
+) {
   const routesDirectory = join(config.cwd, 'app');
   const tempDirectory = join(config.cwd, config.temp, 'routes');
 
@@ -53,9 +56,7 @@ export async function buildServer(config: ResolvedServerConfig) {
   const formattedConfigFile = JSON.stringify(configFileTemp).replace(/\\/g, '/');
   const formattedServerEntry = JSON.stringify(serverEntryTemp).replace(/\\/g, '/');
 
-  writeFileSync(
-    join(tempDirectory, '_temp.js'),
-    `
+  const base = `
 const _dobs = require("dobs");
 const _internal = require("dobs/_build");
 const _dobs_http = _internal.createHTTPServer;
@@ -69,17 +70,34 @@ const _plugin_runner = _internal.createPluginRunner(_config.plugins);
 
 const _app = _dobs_http();
 
-(async function() {
+const _create_app = async function() {
   _plugin_runner.execute("server", _app); // run plugin
   _server_entry(_app); // run server entry
 
   // apply middlewares (1: user middleware, 2: core middleware)
   _app.use(...[..._middlewares, await _internal._buildInternalMiddleware({${rawRoutes.join(',\n')}}, _config)]);
 
+  return _app;
+};
+`;
+
+  if (mode === 'server') {
+    writeFileSync(
+      join(tempDirectory, '_temp.js'),
+      `${base}  
+
+_create_app().then(() => {
   _app.listen(process.env.PORT ?? _config.port, () => {console.log("server is running on " + (process.env.PORT ?? _config.port))});
-})();
-`,
-  );
+})`,
+    );
+  } else {
+    writeFileSync(
+      join(tempDirectory, '_temp.js'),
+      `${base}  
+
+module.exports = _create_app;`,
+    );
+  }
 
   await build({
     input: tempFile,
@@ -103,7 +121,7 @@ const _app = _dobs_http();
   if (configFileTemp) unlinkSync(configFileTemp);
 
   console.log(
-    `${chalk.green('compiled')} compiled successfully. - ${chalk.underline(outputFile)} ${chalk.dim('[minified]')}`,
+    `${chalk.green('compiled')} compiled successfully. - ${chalk.underline(outputFile)} ${chalk.dim(`[mode: ${mode}]`)}`,
   );
 
   return outputFile;

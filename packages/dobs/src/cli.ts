@@ -62,6 +62,7 @@ app
   .command('build')
   .option('--config, -c', 'Provide config file path')
   .option('--cwd', 'Provide cwd', process.cwd())
+  .option('--mode', 'Specifies the mode to build ("server" | "export")', 'server')
   .action(async ({ options }) => {
     const startTime = performance.now();
     let config: ServerConfig = {};
@@ -75,7 +76,7 @@ app
         extensions: ['.js', '.mjs', '.cjs', '.ts', '.mts', '.cts'],
       });
     }
-    await buildServer(resolveConfig(config));
+    await buildServer(resolveConfig(config), options.mode);
 
     console.log(`Done in ${(performance.now() - startTime).toFixed(2)}ms`);
   });
