@@ -23,12 +23,12 @@
     },
     "./_build": {
       "import": {
-        "types": "./dist/exports.d.mts",
-        "default": "./dist/exports.mjs"
+        "types": "./dist/builder/exports.d.mts",
+        "default": "./dist/builder/exports.mjs"
       },
       "require": {
-        "types": "./dist/exports.d.ts",
-        "default": "./dist/exports.js"
+        "types": "./dist/builder/exports.d.ts",
+        "default": "./dist/builder/exports.js"
       }
     },
     "./experimental": {
