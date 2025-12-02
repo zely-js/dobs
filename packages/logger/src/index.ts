@@ -17,9 +17,10 @@ const cyan = (t: string) => `\x1b[36m${t}\x1b[0m`;
 const yellow = (t: string) => `\x1b[33m${t}\x1b[0m`;
 const red = (t: string) => `\x1b[31m${t}\x1b[0m`;
 
-export function logger(): Plugin {
+export function logger(options?: { disableProd?: boolean }): Plugin {
   return {
     name: '@dobsjs/logger',
+    apply: options?.disableProd ? 'development' : undefined,
 
     server(server) {
       server.use((req, res, next) => {

@@ -96,7 +96,7 @@ export function createInternalRouter(
 
   const matchRoute = (url: string) => routes.find((route) => route.regex.test(url));
 
-  return async (req, res, next) => {
+  return async (req: AppRequest, res: AppResponse, next: () => void) => {
     const url = req.URL.pathname;
     const route = matchRoute(url);
 
@@ -135,8 +135,10 @@ export function createInternalRouter(
         handlers,
       ) as any;
 
-      if (handlerObject.all) await execute(handlerObject.all);
-      if (handlerObject[method]) await execute(handlerObject[method]);
+      if (handlerObject.all) return await execute(handlerObject.all);
+      if (handlerObject[method]) return await execute(handlerObject[method]);
+
+      next();
     } catch (e) {
       await pluginRunner.execute('handleError', { error: e });
     }
