@@ -7,6 +7,7 @@ import { createPluginRunner } from '~/dobs/plugin';
 import { createRouterMiddleware } from './router';
 import { loadServerEntry } from './server-entry';
 import { devtool } from './plugins/devtool';
+import chalk from 'chalk';
 
 type CreateServerReturn<T extends ServerConfig> = T['mode'] extends 'middleware'
   ? Middleware[]
@@ -47,6 +48,15 @@ export async function createDobsServer<T extends ServerConfig>(
     return server.middlewares as unknown as CreateServerReturn<T>;
   // return server instance
   return server.listen(resolvedConfig.port, () => {
-    // TODO
+    // $ dobs dev --internal-show-plugins
+    if (process.argv.includes('--dobs-show-plugins')) {
+      for (const plugin of runner.plugins) {
+        const front = chalk.gray(`${chalk.dim('plugins/')}${plugin.name || 'unknown'}`);
+        const frontlen = `plugins/${plugin.name || 'unknown'}`.length;
+        console.log(
+          ` - ${front}${' '.repeat(50 - frontlen > 0 ? 50 - frontlen : 1)} | ${Object.keys(plugin).join(', ')}`,
+        );
+      }
+    }
   }) as unknown as CreateServerReturn<T>;
 }
