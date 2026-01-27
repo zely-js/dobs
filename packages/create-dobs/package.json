@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "main": "./dist/index.cjs",
   "types": "./dist/index.d.cts",
-  "bin": "./dist/index.js",
+  "bin": "./dist/index.cjs",
   "repository": "https://github.com/zely-js/dobs",
   "description": "",
   "files": [

@@ -4,7 +4,7 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.cts",
-  "bin": "./dist/cli.js",
+  "bin": "./dist/cli.cjs",
   "repository": "https://github.com/zely-js/dobs",
   "homepage": "https://dobs.vercel.app",
   "files": [
