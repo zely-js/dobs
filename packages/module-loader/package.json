@@ -1,9 +1,9 @@
 {
   "name": "module-loader-ts",
   "version": "0.1.0",
-  "main": "./dist/index.js",
+  "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/index.d.cts",
   "repository": "https://github.com/zely-js/dobs",
   "description": "Module loader supporting TypeScript, JavaScript, and JSON loading",
   "files": [
@@ -16,8 +16,8 @@
         "default": "./dist/index.mjs"
       },
       "require": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
       }
     }
   },

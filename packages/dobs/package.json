@@ -1,9 +1,9 @@
 {
   "name": "dobs",
   "version": "0.1.3",
-  "main": "./dist/index.js",
+  "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/index.d.cts",
   "bin": "./dist/cli.js",
   "repository": "https://github.com/zely-js/dobs",
   "homepage": "https://dobs.vercel.app",
@@ -17,8 +17,8 @@
         "default": "./dist/index.mjs"
       },
       "require": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
       }
     },
     "./_build": {
@@ -27,8 +27,8 @@
         "default": "./dist/builder/exports.mjs"
       },
       "require": {
-        "types": "./dist/builder/exports.d.ts",
-        "default": "./dist/builder/exports.js"
+        "types": "./dist/builder/exports.d.cts",
+        "default": "./dist/builder/exports.cjs"
       }
     },
     "./experimental": {
@@ -37,8 +37,8 @@
         "default": "./dist/experimental.mjs"
       },
       "require": {
-        "types": "./dist/experimental.d.ts",
-        "default": "./dist/experimental.js"
+        "types": "./dist/experimental.d.cts",
+        "default": "./dist/experimental.cjs"
       }
     }
   },
